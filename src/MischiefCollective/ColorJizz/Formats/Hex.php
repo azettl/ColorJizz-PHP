@@ -261,7 +261,7 @@ class Hex extends ColorJizz
      *
      * @param int $hex the hexidecimal value (i.e. 0x000000)
      */
-    public function __construct($hex)
+    private function __construct($hex)
     {
         if ($hex > 0xFFFFFF || $hex < 0) {
             throw new InvalidArgumentException(sprintf('Parameter hex out of range (%s)', $hex));
@@ -303,7 +303,7 @@ class Hex extends ColorJizz
         $red = (($this->_hex & 0xFF0000) >> 16);
         $green = (($this->_hex & 0x00FF00) >> 8);
         $blue = (($this->_hex & 0x0000FF));
-        return new RGB($red, $green, $blue);
+        return RGB::create($red, $green, $blue);
     }
 
     /**
@@ -452,7 +452,7 @@ class Hex extends ColorJizz
         $str = strtolower($str);
 
         if (array_key_exists($str, self::$_color_names)) {
-            return new Hex(self::$_color_names[$str]);
+            return Hex::create(self::$_color_names[$str]);
         }
 
         if (substr($str, 0, 1) == '#') {
@@ -467,6 +467,6 @@ class Hex extends ColorJizz
             throw new InvalidArgumentException(sprintf('Parameter str is an invalid hex string (%s)', $str));
         }
 
-        return new Hex(hexdec($str));
+        return Hex::create(hexdec($str));
     }
 }

@@ -50,7 +50,7 @@ class CMYK extends ColorJizz
      * @param float $yellow The yellow
      * @param float $key The key (black)
      */
-    public function __construct($cyan, $magenta, $yellow, $key)
+    private function __construct($cyan, $magenta, $yellow, $key)
     {
         $this->toSelf = "toCMYK";
         $this->_cyan = $cyan;
@@ -66,6 +66,8 @@ class CMYK extends ColorJizz
      * @param float $magenta The magenta
      * @param float $yellow The yellow
      * @param float $key The key (black)
+     *
+     * @return MischiefCollective\ColorJizz\Formats\CMYK the color in CMYK format
      */
     public static function create($cyan, $magenta, $yellow, $key)
     {
@@ -175,7 +177,7 @@ class CMYK extends ColorJizz
         $cyan = ($this->_cyan * (1 - $this->_key) + $this->_key);
         $magenta = ($this->_magenta * (1 - $this->_key) + $this->_key);
         $yellow = ($this->_yellow * (1 - $this->_key) + $this->_key);
-        return new CMY($cyan, $magenta, $yellow);
+        return CMY::create($cyan, $magenta, $yellow);
     }
 
     /**
@@ -269,7 +271,7 @@ class CMYK extends ColorJizz
             if(is_numeric(trim($oCMYK[0])) && is_numeric(trim($oCMYK[1])) && is_numeric(trim($oCMYK[2])) && is_numeric(trim($oCMYK[3]))) {
               if(trim($oCMYK[0]) >= 0 && trim($oCMYK[1]) >= 0 && trim($oCMYK[2]) >= 0 && trim($oCMYK[3]) >= 0){
 
-                return new CMYK(trim($oCMYK[0]), trim($oCMYK[1]), trim($oCMYK[2]), trim($oCMYK[3]));
+                return CMYK::create(trim($oCMYK[0]), trim($oCMYK[1]), trim($oCMYK[2]), trim($oCMYK[3]));
               }
             }
         }

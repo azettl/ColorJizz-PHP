@@ -43,12 +43,26 @@ class XYZ extends ColorJizz
      * @param float $y The y dimension
      * @param float $z The z dimension
      */
-    public function __construct($x, $y, $z)
+    private function __construct($x, $y, $z)
     {
         $this->toSelf = "toXYZ";
         $this->_x = $x;
         $this->_y = $y;
         $this->_z = $z;
+    }
+
+    /**
+     * Create a new XYZ color
+     *
+     * @param float $x The x dimension
+     * @param float $y The y dimension
+     * @param float $z The z dimension
+     *
+     * @return MischiefCollective\ColorJizz\Formats\XYZ the color in XYZ format
+     */
+    public static function create($x, $y, $z)
+    {
+        return new XYZ($x, $y, $z);
     }
 
     /**
@@ -94,7 +108,7 @@ class XYZ extends ColorJizz
         $var_R = max(0, min(255, $var_R * 255));
         $var_G = max(0, min(255, $var_G * 255));
         $var_B = max(0, min(255, $var_B * 255));
-        return new RGB($var_R, $var_G, $var_B);
+        return RGB::create($var_R, $var_G, $var_B);
     }
 
     /**
@@ -117,7 +131,7 @@ class XYZ extends ColorJizz
         $Y = $this->_y;
         $x = ($this->_x == 0) ? 0 : $this->_x / ($this->_x + $this->_y + $this->_z);
         $y = ($this->_y == 0) ? 0 : $this->_y / ($this->_x + $Y + $this->_z);
-        return new Yxy($Y, $x, $y);
+        return Yxy::create($Y, $x, $y);
     }
 
     /**
@@ -198,7 +212,7 @@ class XYZ extends ColorJizz
         $a = 500 * ($x - $y);
         $b = 200 * ($y - $z);
 
-        return new CIELab($l, $a, $b);
+        return CIELab::create($l, $a, $b);
     }
 
     /**
@@ -266,7 +280,7 @@ class XYZ extends ColorJizz
         if (count($oXYZ) == 3) {
             if(is_numeric(trim($oXYZ[0])) && is_numeric(trim($oXYZ[1])) && is_numeric(trim($oXYZ[2]))) {
 
-              return new XYZ(trim($oXYZ[0]), trim($oXYZ[1]), trim($oXYZ[2]));
+              return XYZ::create(trim($oXYZ[0]), trim($oXYZ[1]), trim($oXYZ[2]));
             }
         }
 

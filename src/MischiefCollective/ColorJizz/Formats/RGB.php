@@ -39,11 +39,11 @@ class RGB extends ColorJizz
     /**
      * Create a new RGB color
      *
-     * @param float $r The red (0-255)
-     * @param float $g The green (0-255)
-     * @param float $b The blue (0-255)
+     * @param float $red The red (0-255)
+     * @param float $green The green (0-255)
+     * @param float $blue The blue (0-255)
      */
-    public function __construct($red, $green, $blue)
+    private function __construct($red, $green, $blue)
     {
         $this->toSelf = "toRGB";
 
@@ -60,6 +60,20 @@ class RGB extends ColorJizz
         $this->_red = $red;
         $this->_green = $green;
         $this->_blue = $blue;
+    }
+
+    /**
+     * Create a new RGB color
+     *
+     * @param float $red The red (0-255)
+     * @param float $green The green (0-255)
+     * @param float $blue The blue (0-255)
+     *
+     * @return MischiefCollective\ColorJizz\Formats\RGB the color in RGB format
+     */
+    public static function create($red, $green, $blue)
+    {
+        return new RGB($red, $green, $blue);
     }
 
     /**
@@ -99,7 +113,7 @@ class RGB extends ColorJizz
      */
     public function toHex()
     {
-        return new Hex($this->getRed() << 16 | $this->getGreen() << 8 | $this->getBlue());
+        return Hex::create($this->getRed() << 16 | $this->getGreen() << 8 | $this->getBlue());
     }
 
     /**
@@ -143,7 +157,7 @@ class RGB extends ColorJizz
         $new_x = $tmp_r * 0.4124 + $tmp_g * 0.3576 + $tmp_b * 0.1805;
         $new_y = $tmp_r * 0.2126 + $tmp_g * 0.7152 + $tmp_b * 0.0722;
         $new_z = $tmp_r * 0.0193 + $tmp_g * 0.1192 + $tmp_b * 0.9505;
-        return new XYZ($new_x, $new_y, $new_z);
+        return XYZ::create($new_x, $new_y, $new_z);
     }
 
     /**
@@ -200,7 +214,7 @@ class RGB extends ColorJizz
         }
       }
 
-      return new HSL($hue, $s * 100, $l * 100);
+      return HSL::create($hue, $s * 100, $l * 100);
     }
 
     /**
@@ -222,7 +236,7 @@ class RGB extends ColorJizz
         $delta = $max - $min;
 
         if ($delta == 0) {
-            return new HSV(0, 0, $value * 100);
+            return HSV::create(0, 0, $value * 100);
         }
 
         $saturation = 0;
@@ -232,7 +246,7 @@ class RGB extends ColorJizz
         } else {
             $saturation = 0;
             $hue = -1;
-            return new HSV($hue, $saturation, $value);
+            return HSV::create($hue, $saturation, $value);
         }
         if ($red == $max) {
             $hue = ($green - $blue) / $delta;
@@ -248,7 +262,7 @@ class RGB extends ColorJizz
             $hue += 360;
         }
 
-        return new HSV($hue, $saturation * 100, $value * 100);
+        return HSV::create($hue, $saturation * 100, $value * 100);
     }
 
     /**
@@ -261,7 +275,7 @@ class RGB extends ColorJizz
         $cyan = 1 - ($this->_red / 255);
         $magenta = 1 - ($this->_green / 255);
         $yellow = 1 - ($this->_blue / 255);
-        return new CMY($cyan, $magenta, $yellow);
+        return CMY::create($cyan, $magenta, $yellow);
     }
 
     /**
@@ -345,7 +359,7 @@ class RGB extends ColorJizz
           if(self::is_digits(trim($oRgb[0])) && self::is_digits(trim($oRgb[1])) && self::is_digits(trim($oRgb[2]))) {
             if(trim($oRgb[0]) >= 0 && trim($oRgb[1]) >= 0 && trim($oRgb[2]) >= 0){
 
-              return new RGB(trim($oRgb[0]), trim($oRgb[1]), trim($oRgb[2]));
+              return RGB::create(trim($oRgb[0]), trim($oRgb[1]), trim($oRgb[2]));
             }
           }
         }

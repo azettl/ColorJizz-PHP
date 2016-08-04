@@ -43,7 +43,7 @@ class CIELCh extends ColorJizz
      * @param float $chroma The chroma
      * @param float $hue The hue
      */
-    public function __construct($lightness, $chroma, $hue)
+    private function __construct($lightness, $chroma, $hue)
     {
         $this->toSelf = "toCIELCh";
         $this->_lightness = $lightness;
@@ -52,6 +52,20 @@ class CIELCh extends ColorJizz
         if ($this->_hue < 0) {
             $this->_hue += 360;
         }
+    }
+
+    /**
+     * Create a new CIELCh color
+     *
+     * @param float $lightness The lightness
+     * @param float $chroma The chroma
+     * @param float $hue The hue
+     *
+     * @return MischiefCollective\ColorJizz\Formats\CIELCh the color in CIELCh format
+     */
+    public static function create($lightness, $chroma, $hue)
+    {
+        return new CIELCh($lightness, $chroma, $hue);
     }
 
     /**
@@ -134,7 +148,7 @@ class CIELCh extends ColorJizz
         $hradi = $this->_hue * (pi() / 180);
         $a_dimension = cos($hradi) * $this->_chroma;
         $b_dimension = sin($hradi) * $this->_chroma;
-        return new CIELab($this->_lightness, $a_dimension, $b_dimension);
+        return CIELab::create($this->_lightness, $a_dimension, $b_dimension);
     }
 
     /**
@@ -209,7 +223,7 @@ class CIELCh extends ColorJizz
               && trim($oCIELCh[0]) >= 0 && trim($oCIELCh[0]) <= 100
               && is_numeric(trim($oCIELCh[1])) && is_numeric(trim($oCIELCh[2]))) {
 
-              return new CIELCh(trim($oCIELCh[0]), trim($oCIELCh[1]), trim($oCIELCh[2]));
+              return CIELCh::create(trim($oCIELCh[0]), trim($oCIELCh[1]), trim($oCIELCh[2]));
             }
         }
 

@@ -43,7 +43,7 @@ class CMY extends ColorJizz
      * @param float $magenta The magenta
      * @param float $yellow The yellow
      */
-    public function __construct($cyan, $magenta, $yellow)
+    private function __construct($cyan, $magenta, $yellow)
     {
         $this->toSelf = "toCMY";
         $this->_cyan = $cyan;
@@ -57,6 +57,8 @@ class CMY extends ColorJizz
      * @param float $cyan The cyan
      * @param float $magenta The magenta
      * @param float $yellow The yellow
+     *
+     * @return MischiefCollective\ColorJizz\Formats\CMY the color in CMY format
      */
     public static function create($cyan, $magenta, $yellow)
     {
@@ -118,7 +120,7 @@ class CMY extends ColorJizz
         $green = (1 - $this->_magenta) * 255;
         $blue = (1 - $this->_yellow) * 255;
 
-        return new RGB($red, $green, $blue);
+        return RGB::create($red, $green, $blue);
     }
 
     /**
@@ -193,7 +195,7 @@ class CMY extends ColorJizz
 
         $key = $var_K;
 
-        return new CMYK($cyan, $magenta, $yellow, $key);
+        return CMYK::create($cyan, $magenta, $yellow, $key);
     }
 
     /**
@@ -277,7 +279,7 @@ class CMY extends ColorJizz
             if(is_numeric(trim($oCMY[0])) && is_numeric(trim($oCMY[1])) && is_numeric(trim($oCMY[2]))) {
               if(trim($oCMY[0]) >= 0 && trim($oCMY[1]) >= 0 && trim($oCMY[2]) >= 0){
 
-                return new CMY(trim($oCMY[0]), trim($oCMY[1]), trim($oCMY[2]));
+                return CMY::create(trim($oCMY[0]), trim($oCMY[1]), trim($oCMY[2]));
               }
             }
         }

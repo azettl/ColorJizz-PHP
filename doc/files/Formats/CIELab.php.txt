@@ -43,7 +43,7 @@ class CIELab extends ColorJizz
      * @param float $a_dimension The a dimenson
      * @param float $b_dimension The b dimenson
      */
-    public function __construct($lightness, $a_dimension, $b_dimension)
+    private function __construct($lightness, $a_dimension, $b_dimension)
     {
         $this->toSelf = "toCIELab";
         $this->_lightness = $lightness; //$this->roundDec($l, 3);
@@ -57,6 +57,8 @@ class CIELab extends ColorJizz
      * @param float $lightness   The lightness
      * @param float $a_dimension The a dimenson
      * @param float $b_dimension The b dimenson
+     *
+     * @return MischiefCollective\ColorJizz\Formats\CIELab the color in CIELab format
      */
     public static function create($lightness, $a_dimension, $b_dimension)
     {
@@ -116,7 +118,7 @@ class CIELab extends ColorJizz
         $position_x = $ref_X * $var_X;
         $position_y = $ref_Y * $var_Y;
         $position_z = $ref_Z * $var_Z;
-        return new XYZ($position_x, $position_y, $position_z);
+        return XYZ::create($position_x, $position_y, $position_z);
     }
 
     /**
@@ -188,7 +190,7 @@ class CIELab extends ColorJizz
         $chroma = sqrt(pow($this->_a_dimension, 2) + pow($this->_b_dimension, 2));
         $hue = $var_H;
 
-        return new CIELCh($lightness, $chroma, $hue);
+        return CIELCh::create($lightness, $chroma, $hue);
     }
 
     /**
@@ -253,7 +255,7 @@ class CIELab extends ColorJizz
               && trim($oCIELab[0]) >= 0 && trim($oCIELab[0]) <= 100
               && is_numeric(trim($oCIELab[1])) && is_numeric(trim($oCIELab[2]))) {
 
-              return new CIELab(trim($oCIELab[0]), trim($oCIELab[1]), trim($oCIELab[2]));
+              return CIELab::create(trim($oCIELab[0]), trim($oCIELab[1]), trim($oCIELab[2]));
             }
         }
 

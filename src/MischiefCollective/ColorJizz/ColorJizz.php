@@ -138,7 +138,7 @@ abstract class ColorJizz
         for ($red = 0; $red <= 255; $red += 51) {
             for ($green = 0; $green <= 255; $green += 51) {
                 for ($blue = 0; $blue <= 255; $blue += 51) {
-                    $palette[] = new RGB($red, $green, $blue);
+                    $palette[] = RGB::create($red, $green, $blue);
                 }
             }
         }
@@ -176,7 +176,7 @@ abstract class ColorJizz
             $palette[] = $this;
         }
         for ($i = 1; $i < $parts; $i++) {
-            $t = new CIELCh($current->lightness, $current->chroma, $current->hue + ($distance * $i));
+            $t = CIELCh::create($current->lightness, $current->chroma, $current->hue + ($distance * $i));
             $palette[] = call_user_func(array($t, $this->toSelf));
         }
         return $palette;
@@ -236,10 +236,10 @@ abstract class ColorJizz
     {
       if($this->isDark() === false){
 
-        return new Hex(0x000000);
+        return Hex::create(0x000000);
       }else{
 
-        return new Hex(0xFFFFFF);
+        return Hex::create(0xFFFFFF);
       }
     }
 
@@ -253,11 +253,11 @@ abstract class ColorJizz
     public function sweetspot($includeSelf = false)
     {
         $colors = array($this->toHSV());
-        $colors[1] = new HSV($colors[0]->hue, round($colors[0]->saturation * 0.3), min(round($colors[0]->value * 1.3), 100));
-        $colors[3] = new HSV(($colors[0]->hue + 300) % 360, $colors[0]->saturation, $colors[0]->value);
-        $colors[2] = new HSV($colors[1]->hue, min(round($colors[1]->saturation * 1.2), 100), min(round($colors[1]->value * 0.5), 100));
-        $colors[4] = new HSV($colors[2]->hue, 0, ($colors[2]->value + 50) % 100);
-        $colors[5] = new HSV($colors[4]->hue, $colors[4]->saturation, ($colors[4]->value + 50) % 100);
+        $colors[1] = HSV::create($colors[0]->hue, round($colors[0]->saturation * 0.3), min(round($colors[0]->value * 1.3), 100));
+        $colors[3] = HSV::create(($colors[0]->hue + 300) % 360, $colors[0]->saturation, $colors[0]->value);
+        $colors[2] = HSV::create($colors[1]->hue, min(round($colors[1]->saturation * 1.2), 100), min(round($colors[1]->value * 0.5), 100));
+        $colors[4] = HSV::create($colors[2]->hue, 0, ($colors[2]->value + 50) % 100);
+        $colors[5] = HSV::create($colors[4]->hue, $colors[4]->saturation, ($colors[4]->value + 50) % 100);
         if (!$includeSelf) {
             array_shift($colors);
         }
@@ -289,13 +289,13 @@ abstract class ColorJizz
         $current = $this->toCIELCh();
         $rtn = array();
 
-        $t = new CIELCh($current->lightness, $current->chroma, $current->hue + $side1);
+        $t = CIELCh::create($current->lightness, $current->chroma, $current->hue + $side1);
         $rtn[] = call_user_func(array($t, $this->toSelf));
 
-        $t = new CIELCh($current->lightness, $current->chroma, $current->hue + $side1 + $side2);
+        $t = CIELCh::create($current->lightness, $current->chroma, $current->hue + $side1 + $side2);
         $rtn[] = call_user_func(array($t, $this->toSelf));
 
-        $t = new CIELCh($current->lightness, $current->chroma, $current->hue + $side1 + $side2 + $side1);
+        $t = CIELCh::create($current->lightness, $current->chroma, $current->hue + $side1 + $side2 + $side1);
         $rtn[] = call_user_func(array($t, $this->toSelf));
 
         if ($includeSelf) {
@@ -315,7 +315,7 @@ abstract class ColorJizz
             $nr = floor($a->red + ($n * ($b->red - $a->red) / $steps));
             $ng = floor($a->green + ($n * ($b->green - $a->green) / $steps));
             $nb = floor($a->blue + ($n * ($b->blue - $a->blue) / $steps));
-            $t = new RGB($nr, $ng, $nb);
+            $t = RGB::create($nr, $ng, $nb);
             $colors[] = call_user_func(array($t, $this->toSelf));
         }
         if ($includeSelf) {
@@ -334,7 +334,7 @@ abstract class ColorJizz
     {
         $a = $this->toRGB();
         $ds = $a->red * 0.3 + $a->green * 0.59 + $a->blue * 0.11;
-        $t = new RGB($ds, $ds, $ds);
+        $t = RGB::create($ds, $ds, $ds);
         return call_user_func(array($t, $this->toSelf));
     }
 

@@ -43,12 +43,26 @@ class Yxy extends ColorJizz
      * @param float $x The x
      * @param float $y The y
      */
-    public function __construct($Y, $x, $y)
+    private function __construct($Y, $x, $y)
     {
         $this->toSelf = "toYxy";
         $this->_Y = $Y;
         $this->_x = $x;
         $this->_y = $y;
+    }
+
+    /**
+     * Create a new Yxy color
+     *
+     * @param float $Y The Y
+     * @param float $x The x
+     * @param float $y The y
+     *
+     * @return MischiefCollective\ColorJizz\Formats\Yxy the color in Yxy format
+     */
+    public static function create($Y, $x, $y)
+    {
+        return new Yxy($Y, $x, $y);
     }
 
     /**
@@ -81,7 +95,7 @@ class Yxy extends ColorJizz
         $X = ($this->_Y == 0) ? 0 : $this->_x * ($this->_Y / $this->_y);
         $Y = $this->_Y;
         $Z = ($this->_Y == 0) ? 0 : (1 - $this->_x - $this->_y) * ($this->_Y / $this->_y);
-        return new XYZ($X, $Y, $Z);
+        return XYZ::create($X, $Y, $Z);
     }
 
     /**
@@ -209,7 +223,7 @@ class Yxy extends ColorJizz
         if (count($oYxy) == 3) {
             if(is_numeric(trim($oYxy[0])) && is_numeric(trim($oYxy[1])) && is_numeric(trim($oYxy[2]))) {
 
-              return new Yxy(trim($oYxy[0]), trim($oYxy[1]), trim($oYxy[2]));
+              return Yxy::create(trim($oYxy[0]), trim($oYxy[1]), trim($oYxy[2]));
             }
         }
 

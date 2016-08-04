@@ -41,12 +41,26 @@ class HSL extends ColorJizz
      * @param float $saturation The saturation (0-1)
      * @param float $lightness The lightness (0-1)
      */
-    public function __construct($hue, $saturation, $lightness)
+    private function __construct($hue, $saturation, $lightness)
     {
         $this->toSelf     = "toHSL";
         $this->_hue        = $hue;
         $this->_saturation = $saturation;
         $this->_lightness  = $lightness;
+    }
+
+    /**
+     * Create a new HSL color
+     *
+     * @param float $hue The hue (0-1)
+     * @param float $saturation The saturation (0-1)
+     * @param float $lightness The lightness (0-1)
+     *
+     * @return MischiefCollective\ColorJizz\Formats\HSL the color in HSL format
+     */
+    public static function create($hue, $saturation, $lightness)
+    {
+        return new HSL($hue, $saturation, $lightness);
     }
 
     /**
@@ -127,7 +141,7 @@ class HSL extends ColorJizz
         }
       }
 
-      return new RGB($r * 255.0, $g * 255.0, $b * 255.0);
+      return RGB::create($r * 255.0, $g * 255.0, $b * 255.0);
     }
 
     /**
@@ -264,7 +278,7 @@ class HSL extends ColorJizz
         if (count($oHSL) == 3) {
             if(self::is_digits(trim($oHSL[0])) && self::is_digits(trim($oHSL[1])) && self::is_digits(trim($oHSL[2]))) {
 
-              return new HSL(trim($oHSL[0]), trim($oHSL[1]), trim($oHSL[2]));
+              return HSL::create(trim($oHSL[0]), trim($oHSL[1]), trim($oHSL[2]));
             }
         }
 

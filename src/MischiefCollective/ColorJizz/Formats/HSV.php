@@ -43,12 +43,26 @@ class HSV extends ColorJizz
      * @param float $saturation The saturation (0-1)
      * @param float $value The value (0-1)
      */
-    public function __construct($hue, $saturation, $value)
+    private function __construct($hue, $saturation, $value)
     {
         $this->toSelf = "toHSV";
         $this->_hue = $hue;
         $this->_saturation = $saturation;
         $this->_value = $value;
+    }
+
+    /**
+     * Create a new HSV color
+     *
+     * @param float $hue The hue (0-1)
+     * @param float $saturation The saturation (0-1)
+     * @param float $value The value (0-1)
+     *
+     * @return MischiefCollective\ColorJizz\Formats\HSV the color in HSV format
+     */
+    public static function create($hue, $saturation, $value)
+    {
+        return new HSV($hue, $saturation, $value);
     }
 
     /**
@@ -116,7 +130,7 @@ class HSV extends ColorJizz
             $blue  = $var_b * 255;
         }
 
-        return new RGB($red, $green, $blue);
+        return RGB::create($red, $green, $blue);
     }
 
     /**
@@ -254,7 +268,7 @@ class HSV extends ColorJizz
         if (count($oHSV) == 3) {
             if(self::is_digits(trim($oHSV[0])) && self::is_digits(trim($oHSV[1])) && self::is_digits(trim($oHSV[2]))) {
 
-              return new HSV(trim($oHSV[0]), trim($oHSV[1]), trim($oHSV[2]));
+              return HSV::create(trim($oHSV[0]), trim($oHSV[1]), trim($oHSV[2]));
             }
         }
 
