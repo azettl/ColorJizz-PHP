@@ -42,7 +42,7 @@ Color manipulation can be chained together:
 <?php
 use MischiefCollective\ColorJizz\Formats\Hex;
 
-echo Hex::fromString('red')->hue(-20)->greyscale(); // 555555
+echo Hex::createFromString('red')->hue(-20)->greyscale(); // 555555
 ?>
 ```
 
@@ -77,7 +77,7 @@ Yxy::create(Y, x, y);
 <?php
 RGB::createFromString('119, 189, 57'); // or "RGB(119, 189, 57)"
 CMY::createFromString('0.5333, 0.2588, 0.7765'); // or "CMY(0.5333, 0.2588, 0.7765)"
-CMYK::createFromString('0.37, 0.00, 0.70, 0.26'); // or ""
+CMYK::createFromString('0.37, 0.00, 0.70, 0.26'); // or "CMYK(0.37, 0.00, 0.70, 0.26)"
 Hex::createFromString('77BD39'); // or "#77BD39"
 HSV::createFromString('92, 70, 74'); // or "92°, 70%, 74%" or "HSV(92°, 70%, 74%)"
 HSL::createFromString('92, 54, 48'); // or "92°, 54%, 48%" or "HSL(92°, 54%, 48%)"
