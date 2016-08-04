@@ -1,17 +1,14 @@
 <?php
-
-/*
+/**
  * This file is part of the ColorJizz package.
  *
- * (c) Mikee Franklin <mikee@mischiefcollective.com>
- *
+ * (c) Mikee Franklin <mikeefranklin@gmail.com>
  */
 
 namespace MischiefCollective\ColorJizz;
 
 /**
  * Autoloader is used to autoload the library files
- *
  *
  * @author Mikee Franklin <mikee@mischiefcollective.com>
  */
