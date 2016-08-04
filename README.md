@@ -66,6 +66,7 @@ new CMY(c, m, y);
 new CMYK(c, m, y, k);
 new Hex(0x000000);
 new HSV(h, s, v);
+new HSL(h, s, l);
 new CIELab(l, a, b);
 new CIELCh(l, c, h);
 new XYZ(x, y, z);
@@ -81,10 +82,9 @@ new Yxy(Y, x, y);
 ->toCMYK();
 ->toHex();
 ->toHSV();
+->toHSL();
 ->toCIELab();
 ->toCIELCh();
 ->toXYZ();
 ->toYxy();
 ```
-
-
