@@ -26,7 +26,7 @@ ColorJizz can convert to and from any of the supported color formats:
 <?php
 use MischiefCollective\ColorJizz\Formats\Hex;
 
-$red_hex = new Hex(0xFF0000);
+$red_hex = Hex::create(0xFF0000);
 $red_cmyk = $hex->toCMYK();
 
 echo get_class($red_cmyk); // MischiefCollective\ColorJizz\Formats\CMYK
@@ -52,7 +52,7 @@ Any color manipulation will always return the color in the same format unless yo
 <?php
 use MischiefCollective\ColorJizz\Formats\RGB;
 
-$red = new RGB(255, 0, 0);
+$red = RGB::create(255, 0, 0);
 echo get_class($red->hue(-20)->saturation(2)); // MischiefCollective\ColorJizz\Formats\RGB
 ?>
 ```
@@ -61,16 +61,16 @@ echo get_class($red->hue(-20)->saturation(2)); // MischiefCollective\ColorJizz\F
 
 ```php
 <?php
-new RGB(r, g, b);
-new CMY(c, m, y);
-new CMYK(c, m, y, k);
-new Hex(0x000000);
-new HSV(h, s, v);
-new HSL(h, s, l);
-new CIELab(l, a, b);
-new CIELCh(l, c, h);
-new XYZ(x, y, z);
-new Yxy(Y, x, y);
+RGB::create(r, g, b);
+CMY::create(c, m, y);
+CMYK::create(c, m, y, k);
+Hex::create(0x000000);
+HSV::create(h, s, v);
+HSL::create(h, s, l);
+CIELab::create(l, a, b);
+CIELCh::create(l, c, h);
+XYZ::create(x, y, z);
+Yxy::create(Y, x, y);
 ```
 
 ###Conversion functions:
