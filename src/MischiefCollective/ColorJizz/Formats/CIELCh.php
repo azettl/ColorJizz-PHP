@@ -141,6 +141,16 @@ class CIELCh extends ColorJizz
     }
 
     /**
+     * Convert the color to HSL format
+     *
+     * @return MischiefCollective\ColorJizz\Formats\HSL the color in HSL format
+     */
+    public function toHSL()
+    {
+        return $this->toRGB()->toHSL();
+    }
+
+    /**
      * Convert the color to CIELCh format
      *
      * @return MischiefCollective\ColorJizz\Formats\CIELCh the color in CIELCh format
@@ -157,6 +167,55 @@ class CIELCh extends ColorJizz
      */
     public function __toString()
     {
-        return sprintf('%01.4f, %01.4f, %01.4f', $this->lightness, $this->chroma, $this->hue);
+        return sprintf('%01.0f, %01.3f, %01.3f', $this->lightness, $this->chroma, $this->hue);
+    }
+
+    /**
+     * A url string representation of this color in the current format
+     *
+     * @return string The color in format: $lightness_$chroma_$hue
+     */
+    public function toUrlString()
+    {
+        return sprintf('%01.0f_%01.3f_%01.3f', $this->lightness, $this->chroma, $this->hue);
+    }
+
+    /**
+     * A css string representation of this color in the current format
+     *
+     * @return string The color in format: rgb(R, G, B)
+     */
+    public function toCssString()
+    {
+        return $this->toRGB()->toCssString();
+    }
+
+    /**
+     * Create a new CIELCh from a string.
+     *
+     * @param string $str Can be a color name or string CIELCh value (i.e. "l,c,h" or "cielch(l, c, h)")
+     *
+     * @return MischiefCollective\ColorJizz\Formats\CIELCh the color in CIELCh format
+     */
+    public static function fromString($str)
+    {
+        $str = str_replace(
+          array('cieLch', '(', ')', ';'),
+          '',
+          strtolower($str)
+        );
+
+        $oCIELCh = explode(',', $str);
+
+        if (count($oCIELCh) == 3) {
+            if(is_numeric(trim($oCIELCh[0]))
+              && trim($oCIELCh[0]) >= 0 && trim($oCIELCh[0]) <= 100
+              && is_numeric(trim($oCIELCh[1])) && is_numeric(trim($oCIELCh[2]))) {
+
+              return new CIELCh(trim($oCIELCh[0]), trim($oCIELCh[1]), trim($oCIELCh[2]));
+            }
+        }
+
+        throw new InvalidArgumentException(sprintf('Parameter str is an invalid CIELCh string (%s)', $str));
     }
 }

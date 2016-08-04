@@ -23,7 +23,7 @@ use MischiefCollective\ColorJizz\Formats\Hex;
 abstract class ColorJizz
 {
 
-    protected $toSelf;
+    public $toSelf;
 
     /**
      * Convert the color to Hex format
@@ -87,6 +87,29 @@ abstract class ColorJizz
      * @return MischiefCollective\ColorJizz\Formats\HSV the color in HSV format
      */
     abstract public function toHSV();
+
+    /**
+     * Convert the color to HSL format
+     *
+     * @return MischiefCollective\ColorJizz\Formats\HSL the color in HSL format
+     */
+    abstract public function toHSL();
+
+
+    /**
+     * A css string representation of this color in the current format
+     *
+     * @return string
+     */
+    abstract public function toCssString();
+
+
+    /**
+     * A url string representation of this color in the current format
+     *
+     * @return string
+     */
+    abstract public function toUrlString();
 
     /**
      * Find the distance to the destination color
@@ -185,6 +208,11 @@ abstract class ColorJizz
         return $this->hue(180);
     }
 
+    /**
+     * Returns whether a color can be considered dark or not
+     *
+     * @return bool   color is dark or not
+     */
     public function isDark()
     {
       $sHexColor = $this->toHex();
@@ -202,6 +230,11 @@ abstract class ColorJizz
       }
     }
 
+    /**
+     * Returns a matching text color for the current color in hex.
+     *
+     * @return MischiefCollective\ColorJizz\Formats\Hex the color in Hex format
+     */
     public function getMatchingTextColor()
     {
       if($this->isDark() === false){

@@ -188,12 +188,71 @@ class CIELab extends ColorJizz
     }
 
     /**
+     * Convert the color to HSL format
+     *
+     * @return MischiefCollective\ColorJizz\Formats\HSL the color in HSL format
+     */
+    public function toHSL()
+    {
+        return $this->toRGB()->toHSL();
+    }
+
+    /**
      * A string representation of this color in the current format
      *
      * @return string The color in format: $lightness,$a_dimension,$b_dimension
      */
     public function __toString()
     {
-        return sprintf('%01.4f, %01.4f, %01.4f', $this->lightness, $this->a_dimension, $this->b_dimension);
+        return sprintf('%01.0f, %01.3f, %01.3f', $this->lightness, $this->a_dimension, $this->b_dimension);
+    }
+
+    /**
+     * A css string representation of this color in the current format
+     *
+     * @return string The color in format: rgb(R, G, B)
+     */
+    public function toCssString()
+    {
+        return $this->toRGB()->toCssString();
+    }
+
+    /**
+     * A url string representation of this color in the current format
+     *
+     * @return string The color in format: $lightness_$a_dimension_$b_dimension
+     */
+    public function toUrlString()
+    {
+      return sprintf('%01.0f_%01.3f_%01.3f', $this->lightness, $this->a_dimension, $this->b_dimension);
+    }
+
+    /**
+     * Create a new CIELab from a string.
+     *
+     * @param string $str Can be a color name or string CIELab value (i.e. "l,a,b" or "cielab(l, a, b)")
+     *
+     * @return MischiefCollective\ColorJizz\Formats\CIELab the color in CIELab format
+     */
+    public static function fromString($str)
+    {
+        $str = str_replace(
+          array('cieLab', '(', ')', ';'),
+          '',
+          strtolower($str)
+        );
+
+        $oCIELab = explode(',', $str);
+
+        if (count($oCIELab) == 3) {
+            if(is_numeric(trim($oCIELab[0]))
+              && trim($oCIELab[0]) >= 0 && trim($oCIELab[0]) <= 100
+              && is_numeric(trim($oCIELab[1])) && is_numeric(trim($oCIELab[2]))) {
+
+              return new CIELab(trim($oCIELab[0]), trim($oCIELab[1]), trim($oCIELab[2]));
+            }
+        }
+
+        throw new InvalidArgumentException(sprintf('Parameter str is an invalid CIELab string (%s)', $str));
     }
 }

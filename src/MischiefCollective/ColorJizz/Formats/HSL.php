@@ -1,24 +1,17 @@
 <?php
 
-/*
- * This file is part of the ColorJizz package.
- *
- * (c) Mikee Franklin <mikeefranklin@gmail.com>
- *
- */
-
 namespace MischiefCollective\ColorJizz\Formats;
 
 use MischiefCollective\ColorJizz\ColorJizz;
 use MischiefCollective\ColorJizz\Exceptions\InvalidArgumentException;
 
 /**
- * HSV represents the HSV color format
+ * HSL represents the HSL color format
  *
  *
- * @author Mikee Franklin <mikeefranklin@gmail.com>
+ * @author Andreas Zettl <info@azettl.net>
  */
-class HSV extends ColorJizz
+class HSL extends ColorJizz
 {
 
     /**
@@ -34,24 +27,24 @@ class HSV extends ColorJizz
     public $saturation;
 
     /**
-     * The value
+     * The lightness
      * @var float
      */
-    public $value;
+    public $lightness;
 
     /**
-     * Create a new HSV color
+     * Create a new HSL color
      *
      * @param float $hue The hue (0-1)
      * @param float $saturation The saturation (0-1)
-     * @param float $value The value (0-1)
+     * @param float $lightness The lightness (0-1)
      */
-    public function __construct($hue, $saturation, $value)
+    public function __construct($hue, $saturation, $lightness)
     {
-        $this->toSelf = "toHSV";
-        $this->hue = $hue;
+        $this->toSelf     = "toHSL";
+        $this->hue        = $hue;
         $this->saturation = $saturation;
-        $this->value = $value;
+        $this->lightness  = $lightness;
     }
 
     /**
@@ -71,55 +64,68 @@ class HSV extends ColorJizz
      */
     public function toRGB()
     {
-        $hue        = $this->hue / 360;
-        $saturation = $this->saturation / 100;
-        $value      = $this->value / 100;
+      $h = $this->hue / 360;
+      $s = $this->saturation / 100;
+      $l = $this->lightness / 100;
 
-        if ($saturation == 0) {
-            $red   = $value * 255;
-            $green = $value * 255;
-            $blue  = $value * 255;
-        } else {
-            $var_h = $hue * 6;
-            $var_i = floor($var_h);
-            $var_1 = $value * (1 - $saturation);
-            $var_2 = $value * (1 - $saturation * ($var_h - $var_i));
-            $var_3 = $value * (1 - $saturation * (1 - ($var_h - $var_i)));
+      $r = $l;
+      $g = $l;
+      $b = $l;
+      $v = ($l <= 0.5) ? ($l * (1.0 + $s)) : ($l + $s - $l * $s);
+      if ($v > 0){
+        $m;
+        $sv;
+        $sextant;
+        $fract;
+        $vsf;
+        $mid1;
+        $mid2;
 
-            if ($var_i == 0) {
-                $var_r = $value;
-                $var_g = $var_3;
-                $var_b = $var_1;
-            } elseif ($var_i == 1) {
-                $var_r = $var_2;
-                $var_g = $value;
-                $var_b = $var_1;
-            } elseif ($var_i == 2) {
-                $var_r = $var_1;
-                $var_g = $value;
-                $var_b = $var_3;
-            } elseif ($var_i == 3) {
-                $var_r = $var_1;
-                $var_g = $var_2;
-                $var_b = $value;
-            } else {
-                if ($var_i == 4) {
-                    $var_r = $var_3;
-                    $var_g = $var_1;
-                    $var_b = $value;
-                } else {
-                    $var_r = $value;
-                    $var_g = $var_1;
-                    $var_b = $var_2;
-                }
-            }
+        $m       = $l + $l - $v;
+        $sv      = ($v - $m ) / $v;
+        $h      *= 6.0;
+        $sextant = floor($h);
+        $fract   = $h - $sextant;
+        $vsf     = $v * $sv * $fract;
+        $mid1    = $m + $vsf;
+        $mid2    = $v - $vsf;
 
-            $red   = $var_r * 255;
-            $green = $var_g * 255;
-            $blue  = $var_b * 255;
+        switch ($sextant)
+        {
+          case 0:
+            $r = $v;
+            $g = $mid1;
+            $b = $m;
+            break;
+          case 1:
+            $r = $mid2;
+            $g = $v;
+            $b = $m;
+            break;
+          case 2:
+            $r = $m;
+            $g = $v;
+            $b = $mid1;
+            break;
+          case 3:
+            $r = $m;
+            $g = $mid2;
+            $b = $v;
+            break;
+          case 4:
+            $r = $mid1;
+            $g = $m;
+            $b = $v;
+            break;
+          case 5:
+            $r = $v;
+            $g = $m;
+            $b = $mid2;
+            break;
         }
-        
-        return new RGB($red, $green, $blue);
+      }
+
+      return new RGB($r * 255.0, $g * 255.0, $b * 255.0);
     }
 
     /**
@@ -143,13 +149,23 @@ class HSV extends ColorJizz
     }
 
     /**
+     * Convert the color to HSL format
+     *
+     * @return MischiefCollective\ColorJizz\Formats\HSL the color in HSL format
+     */
+    public function toHSL()
+    {
+        return $this;
+    }
+
+    /**
      * Convert the color to HSV format
      *
      * @return MischiefCollective\ColorJizz\Formats\HSV the color in HSV format
      */
     public function toHSV()
     {
-        return $this;
+        return $this->toRGB()->toHSV();
     }
 
     /**
@@ -183,16 +199,6 @@ class HSV extends ColorJizz
     }
 
     /**
-     * Convert the color to HSL format
-     *
-     * @return MischiefCollective\ColorJizz\Formats\CIELab the color in HSL format
-     */
-    public function toHSL()
-    {
-        return $this->toRGB()->toHSL();
-    }
-
-    /**
      * Convert the color to CIELCh format
      *
      * @return MischiefCollective\ColorJizz\Formats\CIELCh the color in CIELCh format
@@ -205,63 +211,62 @@ class HSV extends ColorJizz
     /**
      * A string representation of this color in the current format
      *
-     * @return string The color in format: $hue,$saturation,$value
+     * @return string The color in format: $hue°, $saturation%, $lightness%
      */
     public function __toString()
     {
-        return sprintf('%01.0f°, %01.0f%%, %01.0f%%', $this->hue, $this->saturation, $this->value);
+        return sprintf('%01.0f°, %01.0f%%, %01.0f%%', $this->hue, $this->saturation, $this->lightness);
     }
 
     /**
      * A url string representation of this color in the current format
      *
-     * @return string The color in format: $hue_$saturation_$value
+     * @return string The color in format: $hue_$saturation_$lightness
      */
     public function toUrlString()
     {
-        return sprintf('%01.0f_%01.0f_%01.0f', $this->hue, $this->saturation, $this->value);
+      return sprintf('%01.0f_%01.0f_%01.0f', $this->hue, $this->saturation, $this->lightness);
     }
 
     /**
      * A css string representation of this color in the current format
      *
-     * @return string The color in format: rgb(R, G, B)
+     * @return string The color in format: hsl(h, s%, l%)
      */
     public function toCssString()
     {
-        return $this->toRGB()->toCssString();
+        return sprintf('hsl(%01.0f, %01.0f%%, %01.0f%%)', $this->hue, $this->saturation, $this->lightness);
     }
 
     /**
-     * Create a new hsv from a string.
+     * Create a new hsl from a string.
      *
-     * @param string $str Can be a color name or string hsv value (i.e. "h,s,v" or "hsv(h,s,v)")
+     * @param string $str Can be a color name or string hsl value (i.e. "h,s,l" or "hsl(h, s, l)")
      *
-     * @return MischiefCollective\ColorJizz\Formats\HSV the color in hsv format
+     * @return MischiefCollective\ColorJizz\Formats\HSL the color in hsl format
      */
     public static function fromString($str)
     {
         $str = str_replace(
-          array('hsv', '(', ')', ';', '°', '%'),
+          array('hsl', '(', ')', ';', '°', '%', 'â°'),
           '',
           ($str)
         );
         $str = str_replace(
-          array('hsv', '(', ')', ';', '°', '%'),
+          array('hsl', '(', ')', ';', '°', '%', 'â°'),
           '',
           strtolower($str)
         );
 
-        $oHSV = explode(',', $str);
+        $oHSL = explode(',', $str);
+        if (count($oHSL) == 3) {
+            if(self::is_digits(trim($oHSL[0])) && self::is_digits(trim($oHSL[1])) && self::is_digits(trim($oHSL[2]))) {
 
-        if (count($oHSV) == 3) {
-            if(self::is_digits(trim($oHSV[0])) && self::is_digits(trim($oHSV[1])) && self::is_digits(trim($oHSV[2]))) {
-
-              return new HSV(trim($oHSV[0]), trim($oHSV[1]), trim($oHSV[2]));
+              return new HSL(trim($oHSL[0]), trim($oHSL[1]), trim($oHSL[2]));
             }
         }
 
-        throw new InvalidArgumentException(sprintf('Parameter str is an invalid hsv string (%s)', $str));
+        throw new InvalidArgumentException(sprintf('Parameter str is an invalid hsl string (%s)', $str));
     }
 
     /**

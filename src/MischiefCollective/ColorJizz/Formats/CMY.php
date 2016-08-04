@@ -113,6 +113,7 @@ class CMY extends ColorJizz
         $red = (1 - $this->cyan) * 255;
         $green = (1 - $this->magenta) * 255;
         $blue = (1 - $this->yellow) * 255;
+
         return new RGB($red, $green, $blue);
     }
 
@@ -202,6 +203,16 @@ class CMY extends ColorJizz
     }
 
     /**
+     * Convert the color to HSL format
+     *
+     * @return MischiefCollective\ColorJizz\Formats\HSL the color in HSL format
+     */
+    public function toHSL()
+    {
+        return $this->toRGB()->toHSL();
+    }
+
+    /**
      * Convert the color to CIELCh format
      *
      * @return MischiefCollective\ColorJizz\Formats\CIELCh the color in CIELCh format
@@ -219,5 +230,54 @@ class CMY extends ColorJizz
     public function __toString()
     {
         return sprintf('%01.4f, %01.4f, %01.4f', $this->cyan, $this->magenta, $this->yellow);
+    }
+
+    /**
+     * A url string representation of this color in the current format
+     *
+     * @return string The color in format: $cyan_$magenta_$yellow
+     */
+    public function toUrlString()
+    {
+        return sprintf('%01.4f_%01.4f_%01.4f', $this->cyan, $this->magenta, $this->yellow);
+    }
+
+    /**
+     * A css string representation of this color in the current format
+     *
+     * @return string The color in format: rgb(R, G, B)
+     */
+    public function toCssString()
+    {
+        return $this->toRGB()->toCssString();
+    }
+
+    /**
+     * Create a new cmy from a string.
+     *
+     * @param string $str Can be a color name or string hex value (i.e. "c,m,y" or "cmy(c, m, y)")
+     *
+     * @return MischiefCollective\ColorJizz\Formats\CMY the color in cmy format
+     */
+    public static function fromString($str)
+    {
+        $str = str_replace(
+          array('cmy', '(', ')', ';'),
+          '',
+          strtolower($str)
+        );
+
+        $oCMY = explode(',', $str);
+
+        if (count($oCMY) == 3) {
+            if(is_numeric(trim($oCMY[0])) && is_numeric(trim($oCMY[1])) && is_numeric(trim($oCMY[2]))) {
+              if(trim($oCMY[0]) >= 0 && trim($oCMY[1]) >= 0 && trim($oCMY[2]) >= 0){
+
+                return new CMY(trim($oCMY[0]), trim($oCMY[1]), trim($oCMY[2]));
+              }
+            }
+        }
+
+        throw new InvalidArgumentException(sprintf('Parameter str is an invalid cmy string (%s)', $str));
     }
 }

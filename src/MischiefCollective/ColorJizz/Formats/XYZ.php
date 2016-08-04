@@ -134,6 +134,16 @@ class XYZ extends ColorJizz
     }
 
     /**
+     * Convert the color to HSL format
+     *
+     * @return MischiefCollective\ColorJizz\Formats\HSL the color in HSL format
+     */
+    public function toHSL()
+    {
+        return $this->toRGB()->toHSL();
+    }
+
+    /**
      * Convert the color to CMY format
      *
      * @return MischiefCollective\ColorJizz\Formats\CMY the color in CMY format
@@ -212,5 +222,57 @@ class XYZ extends ColorJizz
     public function __toString()
     {
         return sprintf('%01.4f, %01.4f, %01.4f', $this->x, $this->y, $this->z);
+    }
+
+    /**
+     * A url string representation of this color in the current format
+     *
+     * @return string The color in format: $x_$y,_$z
+     */
+    public function toUrlString()
+    {
+        return sprintf('%01.4f_%01.4f_%01.4f', $this->x, $this->y, $this->z);
+    }
+
+    /**
+     * A css string representation of this color in the current format
+     *
+     * @return string The color in format: rgb(R,G,B)
+     */
+    public function toCssString()
+    {
+        return $this->toRGB()->toCssString();
+    }
+
+    /**
+     * Create a new XYZ from a string.
+     *
+     * @param string $str Can be a color name or string hsv value (i.e. "x,y,z" or "xyz(x, y, z)")
+     *
+     * @return MischiefCollective\ColorJizz\Formats\XYZ the color in XYZ format
+     */
+    public static function fromString($str)
+    {
+        $str = str_replace(
+          array('xyz', '(', ')', ';', '°', '%'),
+          '',
+          $str
+        );
+        $str = str_replace(
+          array('xyz', '(', ')', ';', '°', '%'),
+          '',
+          strtolower($str)
+        );
+
+        $oXYZ = explode(',', $str);
+
+        if (count($oXYZ) == 3) {
+            if(is_numeric(trim($oXYZ[0])) && is_numeric(trim($oXYZ[1])) && is_numeric(trim($oXYZ[2]))) {
+
+              return new XYZ(trim($oXYZ[0]), trim($oXYZ[1]), trim($oXYZ[2]));
+            }
+        }
+
+        throw new InvalidArgumentException(sprintf('Parameter str is an invalid xyz string (%s)', $str));
     }
 }

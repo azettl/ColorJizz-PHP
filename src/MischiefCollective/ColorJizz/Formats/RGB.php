@@ -160,6 +160,53 @@ class RGB extends ColorJizz
     }
 
     /**
+     * Convert the color to HSL format
+     *
+     * @return MischiefCollective\ColorJizz\Formats\HSL the color in HSL format
+     */
+    public function toHSL()
+    {
+      $red   = $this->red / 255;
+      $green = $this->green / 255;
+      $blue  = $this->blue / 255;
+      $max   = max($red, $green, $blue);
+      $min   = min($red, $green, $blue);
+      $delta = $max - $min;
+
+      // Calculate lightness
+      $l = ($max + $min) / 2;
+
+      // If delta is 0, the color is grey
+      // hue and saturation are set to 0
+      if ($delta == 0){
+        $hue = 0;
+        $s   = 0;
+      }else{
+        if ($l < 0.5){
+          $s = $delta / ($max + $min);
+        }else{
+          $s = $delta / (2 - $max - $min);
+        }
+        if ($red == $max) {
+          $hue = (($delta) == 0) ? 0 : ($green - $blue) / $delta;
+        } else {
+          if ($green == $max) {
+            $hue = 2 + ($blue - $red) / $delta;
+          } else {
+            $hue = 4 + ($red - $green) / $delta;
+          }
+        }
+
+        $hue *= 60;
+        if ($hue < 0) {
+            $hue += 360;
+        }
+      }
+
+      return new HSL($hue, $s * 100, $l * 100);
+    }
+
+    /**
      * Convert the color to HSV format
      *
      * @return MischiefCollective\ColorJizz\Formats\HSV the color in HSV format
@@ -258,5 +305,65 @@ class RGB extends ColorJizz
     public function __toString()
     {
         return $this->getRed() . ', ' . $this->getGreen() . ', ' . $this->getBlue();
+    }
+
+    /**
+     * A url string representation of this color in the current format
+     *
+     * @return string The color in format: $red_$green_$blue (rounded)
+     */
+    public function toUrlString()
+    {
+        return $this->getRed() . '_' . $this->getGreen() . '_' . $this->getBlue();
+    }
+
+    /**
+     * A css string representation of this color in the current format
+     *
+     * @return string The color in format: rgb(R, G, B)
+     */
+    public function toCssString()
+    {
+        return 'rgb(' . $this->getRed() . ', ' . $this->getGreen() . ', ' . $this->getBlue() . ')';
+    }
+
+    /**
+     * Create a new rgb from a string.
+     *
+     * @param string $str Can be a color name or string hex value (i.e. "r,g,b" or "rgb(r, g, b)")
+     *
+     * @return MischiefCollective\ColorJizz\Formats\RGB the color in RGB format
+     */
+    public static function fromString($str)
+    {
+        $str = str_replace(
+          array('rgb', '(', ')', ';'),
+          '',
+          strtolower($str)
+        );
+
+        $oRgb = explode(',', $str);
+
+        if (count($oRgb) == 3) {
+          if(self::is_digits(trim($oRgb[0])) && self::is_digits(trim($oRgb[1])) && self::is_digits(trim($oRgb[2]))) {
+            if(trim($oRgb[0]) >= 0 && trim($oRgb[1]) >= 0 && trim($oRgb[2]) >= 0){
+
+              return new RGB(trim($oRgb[0]), trim($oRgb[1]), trim($oRgb[2]));
+            }
+          }
+        }
+
+        throw new InvalidArgumentException(sprintf('Parameter str is an invalid rgb string (%s)', $str));
+    }
+
+    /**
+     * Checks if a string only contains digits
+     *
+     * @param string $str
+     *
+     * @return bool   true if its only digits
+     */
+    private static function is_digits($str) {
+    	return !preg_match ("/[^0-9]/", $str);
     }
 }

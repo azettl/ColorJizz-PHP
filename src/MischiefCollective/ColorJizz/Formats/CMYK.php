@@ -194,6 +194,16 @@ class CMYK extends ColorJizz
     }
 
     /**
+     * Convert the color to HSL format
+     *
+     * @return MischiefCollective\ColorJizz\Formats\HSL the color in HSL format
+     */
+    public function toHSL()
+    {
+        return $this->toRGB()->toHSL();
+    }
+
+    /**
      * Convert the color to CIELCh format
      *
      * @return MischiefCollective\ColorJizz\Formats\CIELCh the color in CIELCh format
@@ -210,6 +220,55 @@ class CMYK extends ColorJizz
      */
     public function __toString()
     {
-        return sprintf('%01.4f, %01.4f, %01.4f, %01.4f', $this->cyan, $this->magenta, $this->yellow, $this->key);
+        return sprintf('%01.2f, %01.2f, %01.2f, %01.2f', $this->cyan, $this->magenta, $this->yellow, $this->key);
+    }
+
+    /**
+     * A url string representation of this color in the current format
+     *
+     * @return string The color in format: $cyan_$magenta_$yellow_$key
+     */
+    public function toUrlString()
+    {
+        return sprintf('%01.2f_%01.2f_%01.2f_%01.2f', $this->cyan, $this->magenta, $this->yellow, $this->key);
+    }
+
+    /**
+     * A css string representation of this color in the current format
+     *
+     * @return string The color in format: rgb(R, G, B)
+     */
+    public function toCssString()
+    {
+        return $this->toRGB()->toCssString();
+    }
+
+    /**
+     * Create a new CMYK from a string.
+     *
+     * @param string $str Can be a color name or string hex value (i.e. "c,m,y,k" or "cmyk(c, m, y, k)")
+     *
+     * @return MischiefCollective\ColorJizz\Formats\CMYK the color in cmy format
+     */
+    public static function fromString($str)
+    {
+        $str = str_replace(
+          array('cmyk', '(', ')', ';'),
+          '',
+          strtolower($str)
+        );
+
+        $oCMYK = explode(',', $str);
+
+        if (count($oCMYK) == 4) {
+            if(is_numeric(trim($oCMYK[0])) && is_numeric(trim($oCMYK[1])) && is_numeric(trim($oCMYK[2])) && is_numeric(trim($oCMYK[3]))) {
+              if(trim($oCMYK[0]) >= 0 && trim($oCMYK[1]) >= 0 && trim($oCMYK[2]) >= 0 && trim($oCMYK[3]) >= 0){
+
+                return new CMYK(trim($oCMYK[0]), trim($oCMYK[1]), trim($oCMYK[2]), trim($oCMYK[3]));
+              }
+            }
+        }
+
+        throw new InvalidArgumentException(sprintf('Parameter str is an invalid cmyk string (%s)', $str));
     }
 }

@@ -108,6 +108,16 @@ class Yxy extends ColorJizz
     }
 
     /**
+     * Convert the color to HSL format
+     *
+     * @return MischiefCollective\ColorJizz\Formats\HSL the color in HSL format
+     */
+    public function toHSL()
+    {
+        return $this->toRGB()->toHSL();
+    }
+
+    /**
      * Convert the color to CMY format
      *
      * @return MischiefCollective\ColorJizz\Formats\CMY the color in CMY format
@@ -155,5 +165,57 @@ class Yxy extends ColorJizz
     public function __toString()
     {
         return sprintf('%01.4f, %01.4f, %01.4f', $this->Y, $this->x, $this->y);
+    }
+
+    /**
+     * A url string representation of this color in the current format
+     *
+     * @return string The color in format: $Y_$x_$y
+     */
+    public function toUrlString()
+    {
+        return sprintf('%01.4f_%01.4f_%01.4f', $this->Y, $this->x, $this->y);
+    }
+
+    /**
+     * A css string representation of this color in the current format
+     *
+     * @return string The color in format: rgb(R,G,B)
+     */
+    public function toCssString()
+    {
+        return $this->toRGB()->toCssString();
+    }
+
+    /**
+     * Create a new yxy from a string.
+     *
+     * @param string $str Can be a color name or string Yxy value (i.e. "y,x,y" or "yxy(y, x, y)")
+     *
+     * @return MischiefCollective\ColorJizz\Formats\Yxy the color in Yxy format
+     */
+    public static function fromString($str)
+    {
+        $str = str_replace(
+          array('yxy', '(', ')', ';', '°', '%'),
+          '',
+          $str
+        );
+        $str = str_replace(
+          array('yxy', '(', ')', ';', '°', '%'),
+          '',
+          strtolower($str)
+        );
+
+        $oYxy = explode(',', $str);
+
+        if (count($oYxy) == 3) {
+            if(is_numeric(trim($oYxy[0])) && is_numeric(trim($oYxy[1])) && is_numeric(trim($oYxy[2]))) {
+
+              return new Yxy(trim($oYxy[0]), trim($oYxy[1]), trim($oYxy[2]));
+            }
+        }
+
+        throw new InvalidArgumentException(sprintf('Parameter str is an invalid yxy string (%s)', $str));
     }
 }

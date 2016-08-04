@@ -376,6 +376,16 @@ class Hex extends ColorJizz
     }
 
     /**
+     * Convert the color to HSL format
+     *
+     * @return MischiefCollective\ColorJizz\Formats\HSL the color in HSL format
+     */
+    public function toHSL()
+    {
+        return $this->toRGB()->toHSL();
+    }
+
+    /**
      * Returns the color name if available otherwise returns false
      *
      * @return mixed    Color name as string or false if the color has no name
@@ -403,7 +413,30 @@ class Hex extends ColorJizz
         $hex = str_pad(dechex($rgb->getRed()), 2, "0", STR_PAD_LEFT);
         $hex .= str_pad(dechex($rgb->getGreen()), 2, "0", STR_PAD_LEFT);
         $hex .= str_pad(dechex($rgb->getBlue()), 2, "0", STR_PAD_LEFT);
+
         return strtoupper($hex);
+    }
+
+
+    /**
+     * A css string representation of this color in the current format
+     *
+     * @return string The color in format: #RRGGBB
+     */
+    public function toCssString()
+    {
+        return '#' . $this->__toString();
+    }
+
+
+    /**
+     * A url string representation of this color in the current format
+     *
+     * @return string The color in format: RRGGBB
+     */
+    public function toUrlString()
+    {
+        return $this->__toString();
     }
 
     /**
