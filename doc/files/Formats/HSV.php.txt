@@ -37,6 +37,46 @@ class HSV extends ColorJizz
     private $_value;
 
     /**
+     * Returns the hue
+     *
+     * @return float
+     */
+    public function getHue()
+    {
+      return $this->_hue;
+    }
+
+    /**
+     * Returns the saturation
+     *
+     * @return float
+     */
+    public function getSaturation()
+    {
+      return $this->_saturation;
+    }
+
+    /**
+     * sets the saturation
+     *
+     * @param float
+     */
+    public function setSaturation($saturation)
+    {
+      $this->_saturation = $saturation;
+    }
+
+    /**
+     * Returns the value
+     *
+     * @return float
+     */
+    public function getValue()
+    {
+      return $this->_value;
+    }
+
+    /**
      * Create a new HSV color
      *
      * @param float $hue The hue (0-1)
@@ -250,7 +290,7 @@ class HSV extends ColorJizz
      *
      * @return MischiefCollective\ColorJizz\Formats\HSV the color in hsv format
      */
-    public static function fromString($str)
+    public static function createFromString($str)
     {
         $str = str_replace(
           array('hsv', '(', ')', ';', '°', '%'),

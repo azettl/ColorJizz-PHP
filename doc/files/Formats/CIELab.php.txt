@@ -37,6 +37,46 @@ class CIELab extends ColorJizz
     private $_b_dimension;
 
     /**
+     * Returns the lightness
+     *
+     * @return float
+     */
+    public function getLightness()
+    {
+      return $this->_lightness;
+    }
+
+    /**
+     * sets the lightness
+     *
+     * @param float $lightness
+     */
+    public function setLightness($lightness)
+    {
+      $this->_lightness = $lightness;
+    }
+
+    /**
+     * Returns the a dimension
+     *
+     * @return float
+     */
+    public function getADimension()
+    {
+      return $this->_a_dimension;
+    }
+
+    /**
+     * Returns the b dimension
+     *
+     * @return float
+     */
+    public function getBDimension()
+    {
+      return $this->_b_dimension;
+    }
+
+    /**
      * Create a new CIELab color
      *
      * @param float $lightness   The lightness
@@ -240,7 +280,7 @@ class CIELab extends ColorJizz
      *
      * @return MischiefCollective\ColorJizz\Formats\CIELab the color in CIELab format
      */
-    public static function fromString($str)
+    public static function createFromString($str)
     {
         $str = str_replace(
           array('cieLab', '(', ')', ';'),

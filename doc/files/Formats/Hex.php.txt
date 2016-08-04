@@ -257,6 +257,16 @@ class Hex extends ColorJizz
     private $_hex;
 
     /**
+     * Returns the hex color
+     *
+     * @return int
+     */
+    public function getHex()
+    {
+      return $this->_hex;
+    }
+
+    /**
      * Create a new Hex
      *
      * @param int $hex the hexidecimal value (i.e. 0x000000)
@@ -447,7 +457,7 @@ class Hex extends ColorJizz
      *
      * @return MischiefCollective\ColorJizz\Formats\Hex the color in Hex format
      */
-    public static function fromString($str)
+    public static function createFromString($str)
     {
         $str = strtolower($str);
 

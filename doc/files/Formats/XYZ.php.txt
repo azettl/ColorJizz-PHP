@@ -37,6 +37,36 @@ class XYZ extends ColorJizz
     private $_z;
 
     /**
+     * Returns the x
+     *
+     * @return float
+     */
+    public function getX()
+    {
+      return $this->_x;
+    }
+
+    /**
+     * Returns the y
+     *
+     * @return float
+     */
+    public function getY()
+    {
+      return $this->_y;
+    }
+
+    /**
+     * Returns the z
+     *
+     * @return float
+     */
+    public function getZ()
+    {
+      return $this->_z;
+    }
+
+    /**
      * Create a new XYZ color
      *
      * @param float $x The x dimension
@@ -262,7 +292,7 @@ class XYZ extends ColorJizz
      *
      * @return MischiefCollective\ColorJizz\Formats\XYZ the color in XYZ format
      */
-    public static function fromString($str)
+    public static function createFromString($str)
     {
         $str = str_replace(
           array('xyz', '(', ')', ';', '°', '%'),

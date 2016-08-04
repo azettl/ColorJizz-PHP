@@ -265,7 +265,7 @@ class CMY extends ColorJizz
      *
      * @return MischiefCollective\ColorJizz\Formats\CMY the color in cmy format
      */
-    public static function fromString($str)
+    public static function createFromString($str)
     {
         $str = str_replace(
           array('cmy', '(', ')', ';'),

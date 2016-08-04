@@ -37,6 +37,36 @@ class Yxy extends ColorJizz
     private $_y;
 
     /**
+     * Returns the Y
+     *
+     * @return float
+     */
+    public function getY()
+    {
+      return $this->_y;
+    }
+
+    /**
+     * Returns the x
+     *
+     * @return float
+     */
+    public function getX()
+    {
+      return $this->_x;
+    }
+
+    /**
+     * Returns the y
+     *
+     * @return float
+     */
+    public function getY2()
+    {
+      return $this->_y;
+    }
+
+    /**
      * Create a new Yxy color
      *
      * @param float $Y The Y
@@ -205,7 +235,7 @@ class Yxy extends ColorJizz
      *
      * @return MischiefCollective\ColorJizz\Formats\Yxy the color in Yxy format
      */
-    public static function fromString($str)
+    public static function createFromString($str)
     {
         $str = str_replace(
           array('yxy', '(', ')', ';', '°', '%'),

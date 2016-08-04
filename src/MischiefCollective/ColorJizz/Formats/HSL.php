@@ -35,6 +35,36 @@ class HSL extends ColorJizz
     private $_lightness;
 
     /**
+     * Returns the hue
+     *
+     * @return float
+     */
+    public function getHue()
+    {
+      return $this->_hue;
+    }
+
+    /**
+     * Returns the saturation
+     *
+     * @return float
+     */
+    public function getSaturation()
+    {
+      return $this->_saturation;
+    }
+
+    /**
+     * Returns the lightness
+     *
+     * @return float
+     */
+    public function getLightness()
+    {
+      return $this->_lightness;
+    }
+
+    /**
      * Create a new HSL color
      *
      * @param float $hue The hue (0-1)
@@ -261,7 +291,7 @@ class HSL extends ColorJizz
      *
      * @return \MischiefCollective\ColorJizz\Formats\HSL the color in hsl format
      */
-    public static function fromString($str)
+    public static function createFromString($str)
     {
         $str = str_replace(
           array('hsl', '(', ')', ';', '°', '%', 'â°'),

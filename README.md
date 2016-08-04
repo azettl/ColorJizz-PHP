@@ -73,6 +73,20 @@ XYZ::create(x, y, z);
 Yxy::create(Y, x, y);
 ```
 
+```php
+<?php
+RGB::createFromString('119, 189, 57'); // or "RGB(119, 189, 57)"
+CMY::createFromString('0.5333, 0.2588, 0.7765'); // or "CMY(0.5333, 0.2588, 0.7765)"
+CMYK::createFromString('0.37, 0.00, 0.70, 0.26'); // or ""
+Hex::createFromString('77BD39'); // or "#77BD39"
+HSV::createFromString('92, 70, 74'); // or "92°, 70%, 74%" or "HSV(92°, 70%, 74%)"
+HSL::createFromString('92, 54, 48'); // or "92°, 54%, 48%" or "HSL(92°, 54%, 48%)"
+CIELab::createFromString('70, -43.638, 56.985'); // or "CIELAB(70, -43.638, 56.985)"
+CIELCh::createFromString('70, 71.774, 127.444'); // or "CIELCH(70, 71.774, 127.444)"
+XYZ::createFromString('26.5998, 40.7494, 10.3551'); // or "XYZ(26.5998, 40.7494, 10.3551)"
+Yxy::createFromString('40.7494, 0.3423, 0.5244'); // or "YXY(40.7494, 0.3423, 0.5244)"
+```
+
 ###Conversion functions:
 
 ```php

@@ -257,7 +257,7 @@ class CMYK extends ColorJizz
      *
      * @return MischiefCollective\ColorJizz\Formats\CMYK the color in cmy format
      */
-    public static function fromString($str)
+    public static function createFromString($str)
     {
         $str = str_replace(
           array('cmyk', '(', ')', ';'),

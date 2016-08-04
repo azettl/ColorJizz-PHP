@@ -345,7 +345,7 @@ class RGB extends ColorJizz
      *
      * @return MischiefCollective\ColorJizz\Formats\RGB the color in RGB format
      */
-    public static function fromString($str)
+    public static function createFromString($str)
     {
         $str = str_replace(
           array('rgb', '(', ')', ';'),
@@ -356,11 +356,22 @@ class RGB extends ColorJizz
         $oRgb = explode(',', $str);
 
         if (count($oRgb) == 3) {
-          if(self::is_digits(trim($oRgb[0])) && self::is_digits(trim($oRgb[1])) && self::is_digits(trim($oRgb[2]))) {
-            if(trim($oRgb[0]) >= 0 && trim($oRgb[1]) >= 0 && trim($oRgb[2]) >= 0){
-
-              return RGB::create(trim($oRgb[0]), trim($oRgb[1]), trim($oRgb[2]));
+          $red   = trim($oRgb[0]);
+          $green = trim($oRgb[1]);
+          $blue  = trim($oRgb[2]);
+          
+          if(self::is_digits($red) && self::is_digits($green) && self::is_digits($blue)) {
+            if ($red < 0 || $red > 255) {
+                throw new InvalidArgumentException(sprintf('Parameter red out of range (%s)', $red));
             }
+            if ($green < 0 || $green > 255) {
+                throw new InvalidArgumentException(sprintf('Parameter green out of range (%s)', $green));
+            }
+            if ($blue < 0 || $blue > 255) {
+                throw new InvalidArgumentException(sprintf('Parameter blue out of range (%s)', $blue));
+            }
+
+            return RGB::create(trim($oRgb[0]), trim($oRgb[1]), trim($oRgb[2]));
           }
         }
 

@@ -37,6 +37,46 @@ class CIELCh extends ColorJizz
     private $_hue;
 
     /**
+     * Returns the lightness
+     *
+     * @return float
+     */
+    public function getLightness()
+    {
+      return $this->_lightness;
+    }
+
+    /**
+     * Returns the chroma
+     *
+     * @return float
+     */
+    public function getChroma()
+    {
+      return $this->_chroma;
+    }
+
+    /**
+     * Returns the hue
+     *
+     * @return float
+     */
+    public function getHue()
+    {
+      return $this->_hue;
+    }
+
+    /**
+     * sets the hue
+     *
+     * @param float $hue
+     */
+    public function setHue($hue)
+    {
+      $this->_hue = $hue;
+    }
+
+    /**
      * Create a new CIELCh color
      *
      * @param float $lightness The lightness
@@ -208,7 +248,7 @@ class CIELCh extends ColorJizz
      *
      * @return MischiefCollective\ColorJizz\Formats\CIELCh the color in CIELCh format
      */
-    public static function fromString($str)
+    public static function createFromString($str)
     {
         $str = str_replace(
           array('cieLch', '(', ')', ';'),
