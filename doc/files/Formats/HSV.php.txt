@@ -1,10 +1,8 @@
 <?php
-
-/*
+/**
  * This file is part of the ColorJizz package.
  *
  * (c) Mikee Franklin <mikeefranklin@gmail.com>
- *
  */
 
 namespace MischiefCollective\ColorJizz\Formats;
@@ -15,7 +13,6 @@ use MischiefCollective\ColorJizz\Exceptions\InvalidArgumentException;
 /**
  * HSV represents the HSV color format
  *
- *
  * @author Mikee Franklin <mikeefranklin@gmail.com>
  */
 class HSV extends ColorJizz
@@ -25,19 +22,19 @@ class HSV extends ColorJizz
      * The hue
      * @var float
      */
-    public $hue;
+    private $_hue;
 
     /**
      * The saturation
      * @var float
      */
-    public $saturation;
+    private $_saturation;
 
     /**
      * The value
      * @var float
      */
-    public $value;
+    private $_value;
 
     /**
      * Create a new HSV color
@@ -49,15 +46,15 @@ class HSV extends ColorJizz
     public function __construct($hue, $saturation, $value)
     {
         $this->toSelf = "toHSV";
-        $this->hue = $hue;
-        $this->saturation = $saturation;
-        $this->value = $value;
+        $this->_hue = $hue;
+        $this->_saturation = $saturation;
+        $this->_value = $value;
     }
 
     /**
      * Convert the color to Hex format
      *
-     * @return \MischiefCollective\ColorJizz\Formats\Hex the color in Hex format
+     * @return MischiefCollective\ColorJizz\Formats\Hex the color in Hex format
      */
     public function toHex()
     {
@@ -67,13 +64,13 @@ class HSV extends ColorJizz
     /**
      * Convert the color to RGB format
      *
-     * @return \MischiefCollective\ColorJizz\Formats\RGB the color in RGB format
+     * @return MischiefCollective\ColorJizz\Formats\RGB the color in RGB format
      */
     public function toRGB()
     {
-        $hue        = $this->hue / 360;
-        $saturation = $this->saturation / 100;
-        $value      = $this->value / 100;
+        $hue        = $this->_hue / 360;
+        $saturation = $this->_saturation / 100;
+        $value      = $this->_value / 100;
 
         if ($saturation == 0) {
             $red   = $value * 255;
@@ -118,14 +115,14 @@ class HSV extends ColorJizz
             $green = $var_g * 255;
             $blue  = $var_b * 255;
         }
-        
+
         return new RGB($red, $green, $blue);
     }
 
     /**
      * Convert the color to XYZ format
      *
-     * @return \MischiefCollective\ColorJizz\Formats\XYZ the color in XYZ format
+     * @return MischiefCollective\ColorJizz\Formats\XYZ the color in XYZ format
      */
     public function toXYZ()
     {
@@ -135,7 +132,7 @@ class HSV extends ColorJizz
     /**
      * Convert the color to Yxy format
      *
-     * @return \MischiefCollective\ColorJizz\Formats\Yxy the color in Yxy format
+     * @return MischiefCollective\ColorJizz\Formats\Yxy the color in Yxy format
      */
     public function toYxy()
     {
@@ -145,7 +142,7 @@ class HSV extends ColorJizz
     /**
      * Convert the color to HSV format
      *
-     * @return \MischiefCollective\ColorJizz\Formats\HSV the color in HSV format
+     * @return MischiefCollective\ColorJizz\Formats\HSV the color in HSV format
      */
     public function toHSV()
     {
@@ -155,7 +152,7 @@ class HSV extends ColorJizz
     /**
      * Convert the color to CMY format
      *
-     * @return \MischiefCollective\ColorJizz\Formats\CMY the color in CMY format
+     * @return MischiefCollective\ColorJizz\Formats\CMY the color in CMY format
      */
     public function toCMY()
     {
@@ -165,7 +162,7 @@ class HSV extends ColorJizz
     /**
      * Convert the color to CMYK format
      *
-     * @return \MischiefCollective\ColorJizz\Formats\CMYK the color in CMYK format
+     * @return MischiefCollective\ColorJizz\Formats\CMYK the color in CMYK format
      */
     public function toCMYK()
     {
@@ -175,7 +172,7 @@ class HSV extends ColorJizz
     /**
      * Convert the color to CIELab format
      *
-     * @return \MischiefCollective\ColorJizz\Formats\CIELab the color in CIELab format
+     * @return MischiefCollective\ColorJizz\Formats\CIELab the color in CIELab format
      */
     public function toCIELab()
     {
@@ -195,7 +192,7 @@ class HSV extends ColorJizz
     /**
      * Convert the color to CIELCh format
      *
-     * @return \MischiefCollective\ColorJizz\Formats\CIELCh the color in CIELCh format
+     * @return MischiefCollective\ColorJizz\Formats\CIELCh the color in CIELCh format
      */
     public function toCIELCh()
     {
@@ -209,7 +206,7 @@ class HSV extends ColorJizz
      */
     public function __toString()
     {
-        return sprintf('%01.0f°, %01.0f%%, %01.0f%%', $this->hue, $this->saturation, $this->value);
+        return sprintf('%01.0f°, %01.0f%%, %01.0f%%', $this->_hue, $this->_saturation, $this->_value);
     }
 
     /**
@@ -219,7 +216,7 @@ class HSV extends ColorJizz
      */
     public function toUrlString()
     {
-        return sprintf('%01.0f_%01.0f_%01.0f', $this->hue, $this->saturation, $this->value);
+        return sprintf('%01.0f_%01.0f_%01.0f', $this->_hue, $this->_saturation, $this->_value);
     }
 
     /**

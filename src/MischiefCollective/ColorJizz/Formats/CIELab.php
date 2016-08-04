@@ -1,10 +1,8 @@
 <?php
-
-/*
+/**
  * This file is part of the ColorJizz package.
  *
  * (c) Mikee Franklin <mikeefranklin@gmail.com>
- *
  */
 
 namespace MischiefCollective\ColorJizz\Formats;
@@ -15,7 +13,6 @@ use MischiefCollective\ColorJizz\Exceptions\InvalidArgumentException;
 /**
  * CIELab represents the CIELab color format
  *
- *
  * @author Mikee Franklin <mikeefranklin@gmail.com>
  */
 class CIELab extends ColorJizz
@@ -25,35 +22,42 @@ class CIELab extends ColorJizz
      * The lightness
      * @var float
      */
-    public $lightness;
+    private $_lightness;
 
     /**
      * The a dimension
      * @var float
      */
-    public $a_dimension;
+    private $_a_dimension;
 
     /**
      * The b dimenson
      * @var float
      */
-    public $b_dimension;
+    private $_b_dimension;
 
     /**
      * Create a new CIELab color
      *
-     * @param float $l The lightness
-     * @param float $a The a dimenson
-     * @param float $b The b dimenson
+     * @param float $lightness   The lightness
+     * @param float $a_dimension The a dimenson
+     * @param float $b_dimension The b dimenson
      */
     public function __construct($lightness, $a_dimension, $b_dimension)
     {
         $this->toSelf = "toCIELab";
-        $this->lightness = $lightness; //$this->roundDec($l, 3);
-        $this->a_dimension = $a_dimension; //$this->roundDec($a, 3);
-        $this->b_dimension = $b_dimension; //$this->roundDec($b, 3);
+        $this->_lightness = $lightness; //$this->roundDec($l, 3);
+        $this->_a_dimension = $a_dimension; //$this->roundDec($a, 3);
+        $this->_b_dimension = $b_dimension; //$this->roundDec($b, 3);
     }
 
+    /**
+     * Create a new CIELab color
+     *
+     * @param float $lightness   The lightness
+     * @param float $a_dimension The a dimenson
+     * @param float $b_dimension The b dimenson
+     */
     public static function create($lightness, $a_dimension, $b_dimension)
     {
         return new CIELab($lightness, $a_dimension, $b_dimension);
@@ -62,7 +66,7 @@ class CIELab extends ColorJizz
     /**
      * Convert the color to Hex format
      *
-     * @return \MischiefCollective\ColorJizz\Formats\Hex the color in Hex format
+     * @return MischiefCollective\ColorJizz\Formats\Hex the color in Hex format
      */
     public function toHex()
     {
@@ -72,7 +76,7 @@ class CIELab extends ColorJizz
     /**
      * Convert the color to RGB format
      *
-     * @return \MischiefCollective\ColorJizz\Formats\RGB the color in RGB format
+     * @return MischiefCollective\ColorJizz\Formats\RGB the color in RGB format
      */
     public function toRGB()
     {
@@ -82,7 +86,7 @@ class CIELab extends ColorJizz
     /**
      * Convert the color to XYZ format
      *
-     * @return \MischiefCollective\ColorJizz\Formats\XYZ the color in XYZ format
+     * @return MischiefCollective\ColorJizz\Formats\XYZ the color in XYZ format
      */
     public function toXYZ()
     {
@@ -90,9 +94,9 @@ class CIELab extends ColorJizz
         $ref_Y = 100.000;
         $ref_Z = 108.883;
 
-        $var_Y = ($this->lightness + 16) / 116;
-        $var_X = $this->a_dimension / 500 + $var_Y;
-        $var_Z = $var_Y - $this->b_dimension / 200;
+        $var_Y = ($this->_lightness + 16) / 116;
+        $var_X = $this->_a_dimension / 500 + $var_Y;
+        $var_Z = $var_Y - $this->_b_dimension / 200;
 
         if (pow($var_Y, 3) > 0.008856) {
             $var_Y = pow($var_Y, 3);
@@ -118,7 +122,7 @@ class CIELab extends ColorJizz
     /**
      * Convert the color to Yxy format
      *
-     * @return \MischiefCollective\ColorJizz\Formats\Yxy the color in Yxy format
+     * @return MischiefCollective\ColorJizz\Formats\Yxy the color in Yxy format
      */
     public function toYxy()
     {
@@ -128,7 +132,7 @@ class CIELab extends ColorJizz
     /**
      * Convert the color to HSV format
      *
-     * @return \MischiefCollective\ColorJizz\Formats\HSV the color in HSV format
+     * @return MischiefCollective\ColorJizz\Formats\HSV the color in HSV format
      */
     public function toHSV()
     {
@@ -138,7 +142,7 @@ class CIELab extends ColorJizz
     /**
      * Convert the color to CMY format
      *
-     * @return \MischiefCollective\ColorJizz\Formats\CMY the color in CMY format
+     * @return MischiefCollective\ColorJizz\Formats\CMY the color in CMY format
      */
     public function toCMY()
     {
@@ -148,7 +152,7 @@ class CIELab extends ColorJizz
     /**
      * Convert the color to CMYK format
      *
-     * @return \MischiefCollective\ColorJizz\Formats\CMYK the color in CMYK format
+     * @return MischiefCollective\ColorJizz\Formats\CMYK the color in CMYK format
      */
     public function toCMYK()
     {
@@ -158,7 +162,7 @@ class CIELab extends ColorJizz
     /**
      * Convert the color to CIELab format
      *
-     * @return \MischiefCollective\ColorJizz\Formats\CIELab the color in CIELab format
+     * @return MischiefCollective\ColorJizz\Formats\CIELab the color in CIELab format
      */
     public function toCIELab()
     {
@@ -168,11 +172,11 @@ class CIELab extends ColorJizz
     /**
      * Convert the color to CIELCh format
      *
-     * @return \MischiefCollective\ColorJizz\Formats\CIELCh the color in CIELCh format
+     * @return MischiefCollective\ColorJizz\Formats\CIELCh the color in CIELCh format
      */
     public function toCIELCh()
     {
-        $var_H = atan2($this->b_dimension, $this->a_dimension);
+        $var_H = atan2($this->_b_dimension, $this->_a_dimension);
 
         if ($var_H > 0) {
             $var_H = ($var_H / pi()) * 180;
@@ -180,8 +184,8 @@ class CIELab extends ColorJizz
             $var_H = 360 - (abs($var_H) / pi()) * 180;
         }
 
-        $lightness = $this->lightness;
-        $chroma = sqrt(pow($this->a_dimension, 2) + pow($this->b_dimension, 2));
+        $lightness = $this->_lightness;
+        $chroma = sqrt(pow($this->_a_dimension, 2) + pow($this->_b_dimension, 2));
         $hue = $var_H;
 
         return new CIELCh($lightness, $chroma, $hue);
@@ -204,7 +208,7 @@ class CIELab extends ColorJizz
      */
     public function __toString()
     {
-        return sprintf('%01.0f, %01.3f, %01.3f', $this->lightness, $this->a_dimension, $this->b_dimension);
+        return sprintf('%01.0f, %01.3f, %01.3f', $this->_lightness, $this->_a_dimension, $this->_b_dimension);
     }
 
     /**
@@ -224,7 +228,7 @@ class CIELab extends ColorJizz
      */
     public function toUrlString()
     {
-      return sprintf('%01.0f_%01.3f_%01.3f', $this->lightness, $this->a_dimension, $this->b_dimension);
+      return sprintf('%01.0f_%01.3f_%01.3f', $this->_lightness, $this->_a_dimension, $this->_b_dimension);
     }
 
     /**

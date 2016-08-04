@@ -1,10 +1,8 @@
 <?php
-
-/*
+/**
  * This file is part of the ColorJizz package.
  *
  * (c) Mikee Franklin <mikeefranklin@gmail.com>
- *
  */
 
 namespace MischiefCollective\ColorJizz\Formats;
@@ -15,7 +13,6 @@ use MischiefCollective\ColorJizz\Exceptions\InvalidArgumentException;
 /**
  * CMYK represents the CMYK color format
  *
- *
  * @author Mikee Franklin <mikeefranklin@gmail.com>
  */
 class CMYK extends ColorJizz
@@ -25,25 +22,25 @@ class CMYK extends ColorJizz
      * The cyan
      * @var float
      */
-    private $cyan;
+    private $_cyan;
 
     /**
      * The magenta
      * @var float
      */
-    private $magenta;
+    private $_magenta;
 
     /**
      * The yellow
      * @var float
      */
-    private $yellow;
+    private $_yellow;
 
     /**
      * The key (black)
      * @var float
      */
-    private $key;
+    private $_key;
 
     /**
      * Create a new CMYK color
@@ -56,12 +53,20 @@ class CMYK extends ColorJizz
     public function __construct($cyan, $magenta, $yellow, $key)
     {
         $this->toSelf = "toCMYK";
-        $this->cyan = $cyan;
-        $this->magenta = $magenta;
-        $this->yellow = $yellow;
-        $this->key = $key;
+        $this->_cyan = $cyan;
+        $this->_magenta = $magenta;
+        $this->_yellow = $yellow;
+        $this->_key = $key;
     }
 
+    /**
+     * Create a new CMYK color
+     *
+     * @param float $cyan The cyan
+     * @param float $magenta The magenta
+     * @param float $yellow The yellow
+     * @param float $key The key (black)
+     */
     public static function create($cyan, $magenta, $yellow, $key)
     {
         return new CMYK($cyan, $magenta, $yellow, $key);
@@ -74,7 +79,7 @@ class CMYK extends ColorJizz
      */
     public function getCyan()
     {
-        return $this->cyan;
+        return $this->_cyan;
     }
 
 
@@ -85,7 +90,7 @@ class CMYK extends ColorJizz
      */
     public function getMagenta()
     {
-        return $this->magenta;
+        return $this->_magenta;
     }
 
 
@@ -96,7 +101,7 @@ class CMYK extends ColorJizz
      */
     public function getYellow()
     {
-        return $this->yellow;
+        return $this->_yellow;
     }
 
 
@@ -107,13 +112,13 @@ class CMYK extends ColorJizz
      */
     public function getKey()
     {
-        return $this->key;
+        return $this->_key;
     }
 
     /**
      * Convert the color to Hex format
      *
-     * @return \MischiefCollective\ColorJizz\Formats\Hex the color in Hex format
+     * @return MischiefCollective\ColorJizz\Formats\Hex the color in Hex format
      */
     public function toHex()
     {
@@ -123,7 +128,7 @@ class CMYK extends ColorJizz
     /**
      * Convert the color to RGB format
      *
-     * @return \MischiefCollective\ColorJizz\Formats\RGB the color in RGB format
+     * @return MischiefCollective\ColorJizz\Formats\RGB the color in RGB format
      */
     public function toRGB()
     {
@@ -133,7 +138,7 @@ class CMYK extends ColorJizz
     /**
      * Convert the color to XYZ format
      *
-     * @return \MischiefCollective\ColorJizz\Formats\XYZ the color in XYZ format
+     * @return MischiefCollective\ColorJizz\Formats\XYZ the color in XYZ format
      */
     public function toXYZ()
     {
@@ -143,7 +148,7 @@ class CMYK extends ColorJizz
     /**
      * Convert the color to Yxy format
      *
-     * @return \MischiefCollective\ColorJizz\Formats\Yxy the color in Yxy format
+     * @return MischiefCollective\ColorJizz\Formats\Yxy the color in Yxy format
      */
     public function toYxy()
     {
@@ -153,7 +158,7 @@ class CMYK extends ColorJizz
     /**
      * Convert the color to HSV format
      *
-     * @return \MischiefCollective\ColorJizz\Formats\HSV the color in HSV format
+     * @return MischiefCollective\ColorJizz\Formats\HSV the color in HSV format
      */
     public function toHSV()
     {
@@ -163,20 +168,20 @@ class CMYK extends ColorJizz
     /**
      * Convert the color to CMY format
      *
-     * @return \MischiefCollective\ColorJizz\Formats\CMY the color in CMY format
+     * @return MischiefCollective\ColorJizz\Formats\CMY the color in CMY format
      */
     public function toCMY()
     {
-        $cyan = ($this->cyan * (1 - $this->key) + $this->key);
-        $magenta = ($this->magenta * (1 - $this->key) + $this->key);
-        $yellow = ($this->yellow * (1 - $this->key) + $this->key);
+        $cyan = ($this->_cyan * (1 - $this->_key) + $this->_key);
+        $magenta = ($this->_magenta * (1 - $this->_key) + $this->_key);
+        $yellow = ($this->_yellow * (1 - $this->_key) + $this->_key);
         return new CMY($cyan, $magenta, $yellow);
     }
 
     /**
      * Convert the color to CMYK format
      *
-     * @return \MischiefCollective\ColorJizz\Formats\CMYK the color in CMYK format
+     * @return MischiefCollective\ColorJizz\Formats\CMYK the color in CMYK format
      */
     public function toCMYK()
     {
@@ -186,7 +191,7 @@ class CMYK extends ColorJizz
     /**
      * Convert the color to CIELab format
      *
-     * @return \MischiefCollective\ColorJizz\Formats\CIELab the color in CIELab format
+     * @return MischiefCollective\ColorJizz\Formats\CIELab the color in CIELab format
      */
     public function toCIELab()
     {
@@ -206,7 +211,7 @@ class CMYK extends ColorJizz
     /**
      * Convert the color to CIELCh format
      *
-     * @return \MischiefCollective\ColorJizz\Formats\CIELCh the color in CIELCh format
+     * @return MischiefCollective\ColorJizz\Formats\CIELCh the color in CIELCh format
      */
     public function toCIELCh()
     {
@@ -220,7 +225,7 @@ class CMYK extends ColorJizz
      */
     public function __toString()
     {
-        return sprintf('%01.2f, %01.2f, %01.2f, %01.2f', $this->cyan, $this->magenta, $this->yellow, $this->key);
+        return sprintf('%01.2f, %01.2f, %01.2f, %01.2f', $this->_cyan, $this->_magenta, $this->_yellow, $this->_key);
     }
 
     /**
@@ -230,7 +235,7 @@ class CMYK extends ColorJizz
      */
     public function toUrlString()
     {
-        return sprintf('%01.2f_%01.2f_%01.2f_%01.2f', $this->cyan, $this->magenta, $this->yellow, $this->key);
+        return sprintf('%01.2f_%01.2f_%01.2f_%01.2f', $this->_cyan, $this->_magenta, $this->_yellow, $this->_key);
     }
 
     /**

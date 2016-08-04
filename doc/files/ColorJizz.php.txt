@@ -1,10 +1,8 @@
 <?php
-
-/*
+/**
  * This file is part of the ColorJizz package.
  *
- * (c) Mikee Franklin <mikee@mischiefcollective.com>
- *
+ * (c) Mikee Franklin <mikeefranklin@gmail.com>
  */
 
 namespace MischiefCollective\ColorJizz;
@@ -12,10 +10,10 @@ namespace MischiefCollective\ColorJizz;
 use MischiefCollective\ColorJizz\Formats\HSV;
 use MischiefCollective\ColorJizz\Formats\CIELCh;
 use MischiefCollective\ColorJizz\Formats\RGB;
+use MischiefCollective\ColorJizz\Formats\Hex;
 
 /**
  * ColorJizz is the base class that all color objects extend
- *
  *
  * @author Mikee Franklin <mikee@mischiefcollective.com>
  */
@@ -27,63 +25,63 @@ abstract class ColorJizz
     /**
      * Convert the color to Hex format
      *
-     * @return \MischiefCollective\ColorJizz\Formats\Hex the color in Hex format
+     * @return MischiefCollective\ColorJizz\Formats\Hex the color in Hex format
      */
     abstract public function toHex();
 
     /**
      * Convert the color to RGB format
      *
-     * @return \MischiefCollective\ColorJizz\Formats\RGB the color in RGB format
+     * @return MischiefCollective\ColorJizz\Formats\RGB the color in RGB format
      */
     abstract public function toRGB();
 
     /**
      * Convert the color to XYZ format
      *
-     * @return \MischiefCollective\ColorJizz\Formats\XYZ the color in XYZ format
+     * @return MischiefCollective\ColorJizz\Formats\XYZ the color in XYZ format
      */
     abstract public function toXYZ();
 
     /**
      * Convert the color to Yxy format
      *
-     * @return \MischiefCollective\ColorJizz\Formats\Yxy the color in Yxy format
+     * @return MischiefCollective\ColorJizz\Formats\Yxy the color in Yxy format
      */
     abstract public function toYxy();
 
     /**
      * Convert the color to CIELab format
      *
-     * @return \MischiefCollective\ColorJizz\Formats\CIELab the color in CIELab format
+     * @return MischiefCollective\ColorJizz\Formats\CIELab the color in CIELab format
      */
     abstract public function toCIELab();
 
     /**
      * Convert the color to CIELCh format
      *
-     * @return \MischiefCollective\ColorJizz\Formats\CIELCh the color in CIELCh format
+     * @return MischiefCollective\ColorJizz\Formats\CIELCh the color in CIELCh format
      */
     abstract public function toCIELCh();
 
     /**
      * Convert the color to CMY format
      *
-     * @return \MischiefCollective\ColorJizz\Formats\CMY the color in CMY format
+     * @return MischiefCollective\ColorJizz\Formats\CMY the color in CMY format
      */
     abstract public function toCMY();
 
     /**
      * Convert the color to CMYK format
      *
-     * @return \MischiefCollective\ColorJizz\Formats\CMYK the color in CMYK format
+     * @return MischiefCollective\ColorJizz\Formats\CMYK the color in CMYK format
      */
     abstract public function toCMYK();
 
     /**
      * Convert the color to HSV format
      *
-     * @return \MischiefCollective\ColorJizz\Formats\HSV the color in HSV format
+     * @return MischiefCollective\ColorJizz\Formats\HSV the color in HSV format
      */
     abstract public function toHSV();
 
@@ -113,7 +111,7 @@ abstract class ColorJizz
     /**
      * Find the distance to the destination color
      *
-     * @param \MischiefCollective\ColorJizz\ColorJizz $destinationColor The destination color
+     * @param MischiefCollective\ColorJizz\ColorJizz $destinationColor The destination color
      *
      * @return int distance to destination color
      */
@@ -132,7 +130,7 @@ abstract class ColorJizz
     /**
      * Find the closest websafe color
      *
-     * @return \MischiefCollective\ColorJizz\ColorJizz The closest color
+     * @return MischiefCollective\ColorJizz\ColorJizz The closest color
      */
     public function websafe()
     {
@@ -152,7 +150,7 @@ abstract class ColorJizz
      *
      * @param array $palette An array of ColorJizz objects to match against
      *
-     * @return \MischiefCollective\ColorJizz\ColorJizz The closest color
+     * @return MischiefCollective\ColorJizz\ColorJizz The closest color
      */
     public function match(array $palette)
     {
@@ -200,7 +198,7 @@ abstract class ColorJizz
     /**
      * Return the opposite, complimentary color
      *
-     * @return \MischiefCollective\ColorJizz\ColorJizz The greyscale color
+     * @return MischiefCollective\ColorJizz\ColorJizz The greyscale color
      */
     public function complement()
     {
@@ -250,7 +248,7 @@ abstract class ColorJizz
      *
      * @param int $includeSelf Include the current color in the return array
      *
-     * @return \MischiefCollective\ColorJizz\ColorJizz[] Array of complimentary colors
+     * @return MischiefCollective\ColorJizz\ColorJizz[] Array of complimentary colors
      */
     public function sweetspot($includeSelf = false)
     {
@@ -307,7 +305,7 @@ abstract class ColorJizz
         return $rtn;
     }
 
-    public function range(ColorJizz $destinationColor, $steps, $includeSelf = false)
+    public function range($destinationColor, $steps, $includeSelf = false)
     {
         $a = $this->toRGB();
         $b = $destinationColor->toRGB();
@@ -330,7 +328,7 @@ abstract class ColorJizz
     /**
      * Return a greyscale version of the current color
      *
-     * @return \MischiefCollective\ColorJizz\ColorJizz The greyscale color
+     * @return MischiefCollective\ColorJizz\ColorJizz The greyscale color
      */
     public function greyscale()
     {
@@ -346,7 +344,7 @@ abstract class ColorJizz
      * @param int $degreeModifier Degrees to modify by
      * @param bool $absolute If TRUE set absolute value
      *
-     * @return \MischiefCollective\ColorJizz\ColorJizz The modified color
+     * @return MischiefCollective\ColorJizz\ColorJizz The modified color
      */
     public function hue($degreeModifier, $absolute = FALSE)
     {
@@ -362,7 +360,7 @@ abstract class ColorJizz
      * @param int $satModifier Value to modify by
      * @param bool $absolute If TRUE set absolute value
      *
-     * @return \MischiefCollective\ColorJizz\ColorJizz The modified color
+     * @return MischiefCollective\ColorJizz\ColorJizz The modified color
      */
     public function saturation($satModifier, $absolute = FALSE)
     {
@@ -378,7 +376,7 @@ abstract class ColorJizz
      * @param int $brightnessModifier Value to modify by
      * @param bool $absolute If TRUE set absolute value
      *
-     * @return \MischiefCollective\ColorJizz\ColorJizz The modified color
+     * @return MischiefCollective\ColorJizz\ColorJizz The modified color
      */
     public function brightness($brightnessModifier, $absolute = FALSE)
     {

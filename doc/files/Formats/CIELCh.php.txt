@@ -1,10 +1,8 @@
 <?php
-
-/*
+/**
  * This file is part of the ColorJizz package.
  *
  * (c) Mikee Franklin <mikeefranklin@gmail.com>
- *
  */
 
 namespace MischiefCollective\ColorJizz\Formats;
@@ -15,7 +13,6 @@ use MischiefCollective\ColorJizz\Exceptions\InvalidArgumentException;
 /**
  * CIELCh represents the CIELCh color format
  *
- *
  * @author Mikee Franklin <mikeefranklin@gmail.com>
  */
 class CIELCh extends ColorJizz
@@ -25,19 +22,19 @@ class CIELCh extends ColorJizz
      * The lightness
      * @var float
      */
-    public $lightness;
+    private $_lightness;
 
     /**
      * The chroma
      * @var float
      */
-    public $chroma;
+    private $_chroma;
 
     /**
      * The hue
      * @var float
      */
-    public $hue;
+    private $_hue;
 
     /**
      * Create a new CIELCh color
@@ -49,18 +46,18 @@ class CIELCh extends ColorJizz
     public function __construct($lightness, $chroma, $hue)
     {
         $this->toSelf = "toCIELCh";
-        $this->lightness = $lightness;
-        $this->chroma = $chroma;
-        $this->hue = fmod($hue, 360);
-        if ($this->hue < 0) {
-            $this->hue += 360;
+        $this->_lightness = $lightness;
+        $this->_chroma = $chroma;
+        $this->_hue = fmod($hue, 360);
+        if ($this->_hue < 0) {
+            $this->_hue += 360;
         }
     }
 
     /**
      * Convert the color to Hex format
      *
-     * @return \MischiefCollective\ColorJizz\Formats\Hex the color in Hex format
+     * @return MischiefCollective\ColorJizz\Formats\Hex the color in Hex format
      */
     public function toHex()
     {
@@ -70,7 +67,7 @@ class CIELCh extends ColorJizz
     /**
      * Convert the color to RGB format
      *
-     * @return \MischiefCollective\ColorJizz\Formats\RGB the color in RGB format
+     * @return MischiefCollective\ColorJizz\Formats\RGB the color in RGB format
      */
     public function toRGB()
     {
@@ -80,7 +77,7 @@ class CIELCh extends ColorJizz
     /**
      * Convert the color to XYZ format
      *
-     * @return \MischiefCollective\ColorJizz\Formats\XYZ the color in XYZ format
+     * @return MischiefCollective\ColorJizz\Formats\XYZ the color in XYZ format
      */
     public function toXYZ()
     {
@@ -90,7 +87,7 @@ class CIELCh extends ColorJizz
     /**
      * Convert the color to Yxy format
      *
-     * @return \MischiefCollective\ColorJizz\Formats\Yxy the color in Yxy format
+     * @return MischiefCollective\ColorJizz\Formats\Yxy the color in Yxy format
      */
     public function toYxy()
     {
@@ -100,7 +97,7 @@ class CIELCh extends ColorJizz
     /**
      * Convert the color to HSV format
      *
-     * @return \MischiefCollective\ColorJizz\Formats\HSV the color in HSV format
+     * @return MischiefCollective\ColorJizz\Formats\HSV the color in HSV format
      */
     public function toHSV()
     {
@@ -110,7 +107,7 @@ class CIELCh extends ColorJizz
     /**
      * Convert the color to CMY format
      *
-     * @return \MischiefCollective\ColorJizz\Formats\CMY the color in CMY format
+     * @return MischiefCollective\ColorJizz\Formats\CMY the color in CMY format
      */
     public function toCMY()
     {
@@ -120,7 +117,7 @@ class CIELCh extends ColorJizz
     /**
      * Convert the color to CMYK format
      *
-     * @return \MischiefCollective\ColorJizz\Formats\CMYK the color in CMYK format
+     * @return MischiefCollective\ColorJizz\Formats\CMYK the color in CMYK format
      */
     public function toCMYK()
     {
@@ -130,14 +127,14 @@ class CIELCh extends ColorJizz
     /**
      * Convert the color to CIELab format
      *
-     * @return \MischiefCollective\ColorJizz\Formats\CIELab the color in CIELab format
+     * @return MischiefCollective\ColorJizz\Formats\CIELab the color in CIELab format
      */
     public function toCIELab()
     {
-        $hradi = $this->hue * (pi() / 180);
-        $a_dimension = cos($hradi) * $this->chroma;
-        $b_dimension = sin($hradi) * $this->chroma;
-        return new CIELab($this->lightness, $a_dimension, $b_dimension);
+        $hradi = $this->_hue * (pi() / 180);
+        $a_dimension = cos($hradi) * $this->_chroma;
+        $b_dimension = sin($hradi) * $this->_chroma;
+        return new CIELab($this->_lightness, $a_dimension, $b_dimension);
     }
 
     /**
@@ -153,7 +150,7 @@ class CIELCh extends ColorJizz
     /**
      * Convert the color to CIELCh format
      *
-     * @return \MischiefCollective\ColorJizz\Formats\CIELCh the color in CIELCh format
+     * @return MischiefCollective\ColorJizz\Formats\CIELCh the color in CIELCh format
      */
     public function toCIELCh()
     {
@@ -167,7 +164,7 @@ class CIELCh extends ColorJizz
      */
     public function __toString()
     {
-        return sprintf('%01.0f, %01.3f, %01.3f', $this->lightness, $this->chroma, $this->hue);
+        return sprintf('%01.0f, %01.3f, %01.3f', $this->_lightness, $this->_chroma, $this->_hue);
     }
 
     /**
@@ -177,7 +174,7 @@ class CIELCh extends ColorJizz
      */
     public function toUrlString()
     {
-        return sprintf('%01.0f_%01.3f_%01.3f', $this->lightness, $this->chroma, $this->hue);
+        return sprintf('%01.0f_%01.3f_%01.3f', $this->_lightness, $this->_chroma, $this->_hue);
     }
 
     /**

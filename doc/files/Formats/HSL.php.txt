@@ -1,4 +1,7 @@
 <?php
+/**
+ * This file is part of the ColorJizz package.
+ */
 
 namespace MischiefCollective\ColorJizz\Formats;
 
@@ -7,7 +10,6 @@ use MischiefCollective\ColorJizz\Exceptions\InvalidArgumentException;
 
 /**
  * HSL represents the HSL color format
- *
  *
  * @author Andreas Zettl <info@azettl.net>
  */
@@ -18,19 +20,19 @@ class HSL extends ColorJizz
      * The hue
      * @var float
      */
-    public $hue;
+    private $_hue;
 
     /**
      * The saturation
      * @var float
      */
-    public $saturation;
+    private $_saturation;
 
     /**
      * The lightness
      * @var float
      */
-    public $lightness;
+    private $_lightness;
 
     /**
      * Create a new HSL color
@@ -42,15 +44,15 @@ class HSL extends ColorJizz
     public function __construct($hue, $saturation, $lightness)
     {
         $this->toSelf     = "toHSL";
-        $this->hue        = $hue;
-        $this->saturation = $saturation;
-        $this->lightness  = $lightness;
+        $this->_hue        = $hue;
+        $this->_saturation = $saturation;
+        $this->_lightness  = $lightness;
     }
 
     /**
      * Convert the color to Hex format
      *
-     * @return MischiefCollective\ColorJizz\Formats\Hex the color in Hex format
+     * @return \MischiefCollective\ColorJizz\Formats\Hex the color in Hex format
      */
     public function toHex()
     {
@@ -60,13 +62,13 @@ class HSL extends ColorJizz
     /**
      * Convert the color to RGB format
      *
-     * @return MischiefCollective\ColorJizz\Formats\RGB the color in RGB format
+     * @return \MischiefCollective\ColorJizz\Formats\RGB the color in RGB format
      */
     public function toRGB()
     {
-      $h = $this->hue / 360;
-      $s = $this->saturation / 100;
-      $l = $this->lightness / 100;
+      $h = $this->_hue / 360;
+      $s = $this->_saturation / 100;
+      $l = $this->_lightness / 100;
 
       $r = $l;
       $g = $l;
@@ -131,7 +133,7 @@ class HSL extends ColorJizz
     /**
      * Convert the color to XYZ format
      *
-     * @return MischiefCollective\ColorJizz\Formats\XYZ the color in XYZ format
+     * @return \MischiefCollective\ColorJizz\Formats\XYZ the color in XYZ format
      */
     public function toXYZ()
     {
@@ -141,7 +143,7 @@ class HSL extends ColorJizz
     /**
      * Convert the color to Yxy format
      *
-     * @return MischiefCollective\ColorJizz\Formats\Yxy the color in Yxy format
+     * @return \MischiefCollective\ColorJizz\Formats\Yxy the color in Yxy format
      */
     public function toYxy()
     {
@@ -151,7 +153,7 @@ class HSL extends ColorJizz
     /**
      * Convert the color to HSL format
      *
-     * @return MischiefCollective\ColorJizz\Formats\HSL the color in HSL format
+     * @return \MischiefCollective\ColorJizz\Formats\HSL the color in HSL format
      */
     public function toHSL()
     {
@@ -161,7 +163,7 @@ class HSL extends ColorJizz
     /**
      * Convert the color to HSV format
      *
-     * @return MischiefCollective\ColorJizz\Formats\HSV the color in HSV format
+     * @return \MischiefCollective\ColorJizz\Formats\HSV the color in HSV format
      */
     public function toHSV()
     {
@@ -171,7 +173,7 @@ class HSL extends ColorJizz
     /**
      * Convert the color to CMY format
      *
-     * @return MischiefCollective\ColorJizz\Formats\CMY the color in CMY format
+     * @return \MischiefCollective\ColorJizz\Formats\CMY the color in CMY format
      */
     public function toCMY()
     {
@@ -181,7 +183,7 @@ class HSL extends ColorJizz
     /**
      * Convert the color to CMYK format
      *
-     * @return MischiefCollective\ColorJizz\Formats\CMYK the color in CMYK format
+     * @return \MischiefCollective\ColorJizz\Formats\CMYK the color in CMYK format
      */
     public function toCMYK()
     {
@@ -191,7 +193,7 @@ class HSL extends ColorJizz
     /**
      * Convert the color to CIELab format
      *
-     * @return MischiefCollective\ColorJizz\Formats\CIELab the color in CIELab format
+     * @return \MischiefCollective\ColorJizz\Formats\CIELab the color in CIELab format
      */
     public function toCIELab()
     {
@@ -201,7 +203,7 @@ class HSL extends ColorJizz
     /**
      * Convert the color to CIELCh format
      *
-     * @return MischiefCollective\ColorJizz\Formats\CIELCh the color in CIELCh format
+     * @return \MischiefCollective\ColorJizz\Formats\CIELCh the color in CIELCh format
      */
     public function toCIELCh()
     {
@@ -215,7 +217,7 @@ class HSL extends ColorJizz
      */
     public function __toString()
     {
-        return sprintf('%01.0f°, %01.0f%%, %01.0f%%', $this->hue, $this->saturation, $this->lightness);
+        return sprintf('%01.0f°, %01.0f%%, %01.0f%%', $this->_hue, $this->_saturation, $this->_lightness);
     }
 
     /**
@@ -225,7 +227,7 @@ class HSL extends ColorJizz
      */
     public function toUrlString()
     {
-      return sprintf('%01.0f_%01.0f_%01.0f', $this->hue, $this->saturation, $this->lightness);
+      return sprintf('%01.0f_%01.0f_%01.0f', $this->_hue, $this->_saturation, $this->_lightness);
     }
 
     /**
@@ -235,7 +237,7 @@ class HSL extends ColorJizz
      */
     public function toCssString()
     {
-        return sprintf('hsl(%01.0f, %01.0f%%, %01.0f%%)', $this->hue, $this->saturation, $this->lightness);
+        return sprintf('hsl(%01.0f, %01.0f%%, %01.0f%%)', $this->_hue, $this->_saturation, $this->_lightness);
     }
 
     /**
@@ -243,7 +245,7 @@ class HSL extends ColorJizz
      *
      * @param string $str Can be a color name or string hsl value (i.e. "h,s,l" or "hsl(h, s, l)")
      *
-     * @return MischiefCollective\ColorJizz\Formats\HSL the color in hsl format
+     * @return \MischiefCollective\ColorJizz\Formats\HSL the color in hsl format
      */
     public static function fromString($str)
     {

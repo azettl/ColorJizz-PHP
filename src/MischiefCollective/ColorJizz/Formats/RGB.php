@@ -1,10 +1,8 @@
 <?php
-
-/*
+/**
  * This file is part of the ColorJizz package.
  *
  * (c) Mikee Franklin <mikeefranklin@gmail.com>
- *
  */
 
 namespace MischiefCollective\ColorJizz\Formats;
@@ -15,7 +13,6 @@ use MischiefCollective\ColorJizz\Exceptions\InvalidArgumentException;
 /**
  * RGB represents the RGB color format
  *
- *
  * @author Mikee Franklin <mikeefranklin@gmail.com>
  */
 class RGB extends ColorJizz
@@ -25,19 +22,19 @@ class RGB extends ColorJizz
      * The red value (0-255)
      * @var float
      */
-    public $red;
+    private $_red;
 
     /**
      * The green value (0-255)
      * @var float
      */
-    public $green;
+    private $_green;
 
     /**
      * The blue value (0-255)
      * @var float
      */
-    public $blue;
+    private $_blue;
 
     /**
      * Create a new RGB color
@@ -60,9 +57,9 @@ class RGB extends ColorJizz
             throw new InvalidArgumentException(sprintf('Parameter blue out of range (%s)', $blue));
         }
 
-        $this->red = $red;
-        $this->green = $green;
-        $this->blue = $blue;
+        $this->_red = $red;
+        $this->_green = $green;
+        $this->_blue = $blue;
     }
 
     /**
@@ -72,7 +69,7 @@ class RGB extends ColorJizz
      */
     public function getRed()
     {
-        return (0.5 + $this->red) | 0;
+        return (0.5 + $this->_red) | 0;
     }
 
     /**
@@ -82,7 +79,7 @@ class RGB extends ColorJizz
      */
     public function getGreen()
     {
-        return (0.5 + $this->green) | 0;
+        return (0.5 + $this->_green) | 0;
     }
 
     /**
@@ -92,13 +89,13 @@ class RGB extends ColorJizz
      */
     public function getBlue()
     {
-        return (0.5 + $this->blue) | 0;
+        return (0.5 + $this->_blue) | 0;
     }
 
     /**
      * Convert the color to Hex format
      *
-     * @return \MischiefCollective\ColorJizz\Formats\Hex the color in Hex format
+     * @return MischiefCollective\ColorJizz\Formats\Hex the color in Hex format
      */
     public function toHex()
     {
@@ -108,7 +105,7 @@ class RGB extends ColorJizz
     /**
      * Convert the color to RGB format
      *
-     * @return \MischiefCollective\ColorJizz\Formats\RGB the color in RGB format
+     * @return MischiefCollective\ColorJizz\Formats\RGB the color in RGB format
      */
     public function toRGB()
     {
@@ -118,13 +115,13 @@ class RGB extends ColorJizz
     /**
      * Convert the color to XYZ format
      *
-     * @return \MischiefCollective\ColorJizz\Formats\XYZ the color in XYZ format
+     * @return MischiefCollective\ColorJizz\Formats\XYZ the color in XYZ format
      */
     public function toXYZ()
     {
-        $tmp_r = $this->red / 255;
-        $tmp_g = $this->green / 255;
-        $tmp_b = $this->blue / 255;
+        $tmp_r = $this->_red / 255;
+        $tmp_g = $this->_green / 255;
+        $tmp_b = $this->_blue / 255;
         if ($tmp_r > 0.04045) {
             $tmp_r = pow((($tmp_r + 0.055) / 1.055), 2.4);
         } else {
@@ -152,7 +149,7 @@ class RGB extends ColorJizz
     /**
      * Convert the color to Yxy format
      *
-     * @return \MischiefCollective\ColorJizz\Formats\Yxy the color in Yxy format
+     * @return MischiefCollective\ColorJizz\Formats\Yxy the color in Yxy format
      */
     public function toYxy()
     {
@@ -166,9 +163,9 @@ class RGB extends ColorJizz
      */
     public function toHSL()
     {
-      $red   = $this->red / 255;
-      $green = $this->green / 255;
-      $blue  = $this->blue / 255;
+      $red   = $this->_red / 255;
+      $green = $this->_green / 255;
+      $blue  = $this->_blue / 255;
       $max   = max($red, $green, $blue);
       $min   = min($red, $green, $blue);
       $delta = $max - $min;
@@ -209,13 +206,13 @@ class RGB extends ColorJizz
     /**
      * Convert the color to HSV format
      *
-     * @return \MischiefCollective\ColorJizz\Formats\HSV the color in HSV format
+     * @return MischiefCollective\ColorJizz\Formats\HSV the color in HSV format
      */
     public function toHSV()
     {
-        $red = $this->red / 255;
-        $green = $this->green / 255;
-        $blue = $this->blue / 255;
+        $red = $this->_red / 255;
+        $green = $this->_green / 255;
+        $blue = $this->_blue / 255;
 
 
         $min = min($red, $green, $blue);
@@ -257,20 +254,20 @@ class RGB extends ColorJizz
     /**
      * Convert the color to CMY format
      *
-     * @return \MischiefCollective\ColorJizz\Formats\CMY the color in CMY format
+     * @return MischiefCollective\ColorJizz\Formats\CMY the color in CMY format
      */
     public function toCMY()
     {
-        $cyan = 1 - ($this->red / 255);
-        $magenta = 1 - ($this->green / 255);
-        $yellow = 1 - ($this->blue / 255);
+        $cyan = 1 - ($this->_red / 255);
+        $magenta = 1 - ($this->_green / 255);
+        $yellow = 1 - ($this->_blue / 255);
         return new CMY($cyan, $magenta, $yellow);
     }
 
     /**
      * Convert the color to CMYK format
      *
-     * @return \MischiefCollective\ColorJizz\Formats\CMYK the color in CMYK format
+     * @return MischiefCollective\ColorJizz\Formats\CMYK the color in CMYK format
      */
     public function toCMYK()
     {
@@ -280,7 +277,7 @@ class RGB extends ColorJizz
     /**
      * Convert the color to CIELab format
      *
-     * @return \MischiefCollective\ColorJizz\Formats\CIELab the color in CIELab format
+     * @return MischiefCollective\ColorJizz\Formats\CIELab the color in CIELab format
      */
     public function toCIELab()
     {
@@ -290,7 +287,7 @@ class RGB extends ColorJizz
     /**
      * Convert the color to CIELCh format
      *
-     * @return \MischiefCollective\ColorJizz\Formats\CIELCh the color in CIELCh format
+     * @return MischiefCollective\ColorJizz\Formats\CIELCh the color in CIELCh format
      */
     public function toCIELCh()
     {
